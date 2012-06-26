@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+	<name>PLG_SYS_TWBOOTSTRAP</name>
+	<author>Digital Disseny, S.L.</author>
+	<creationDate>June 2012</creationDate>
+	<copyright>Copyright (C) 2012 Digital Disseny, S.L. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>roberto@digitaldisseny.com</authorEmail>
+	<authorUrl>www.digitaldisseny.com.com</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
+	<files>
+		<folder>css</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<filename plugin="twbootstrap">twbootstrap.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<languages>
+		<!-- en-GB -->
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_twbootstrap.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_twbootstrap.sys.ini</language>
+	</languages>
+	<config>
+	<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="loadJquery"
+					type="list"
+					default="0"
+					label="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_JQUERY_LABEL"
+					description="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_JQUERY_DESC">
+						<option value="0">
+							PLG_SYS_TWBOOTSTRAP_VALUE_DO_NOT_LOAD
+						</option>
+						<option value="1">
+							PLG_SYS_TWBOOTSTRAP_VALUE_LOAD_LOCALLY
+						</option>
+						<option value="2">
+							PLG_SYS_TWBOOTSTRAP_VALUE_LOAD_GOOGLE
+						</option>
+				</field>
+				<field
+					name="loadBootstrap"
+					type="radio"
+					default="1"
+					label="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_LABEL"
+					description="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_DESC">
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+				<field name="bootstrapMode" 
+					type="list" 
+		            label="PLG_SYS_TWBOOTSTRAP_FIELD_BOOTSTRAP_MODE_LABEL"
+		            description="PLG_SYS_TWBOOTSTRAP_FIELD_BOOTSTRAP_MODE_DESC"
+		            default="fluid">
+						<option value="fluid">PLG_SYS_TWBOOTSTRAP_VALUE_FLUID</option>
+						<option value="static">PLG_SYS_TWBOOTSTRAP_VALUE_STATIC</option>
+				</field>
+				<field
+					name="comColumns"
+					type="integer"
+					first="1"
+					last="12"
+					step="1"
+					default="12"
+					label="PLG_SYS_TWBOOTSTRAP_FIELD_COM_COLUMNS_LABEL"
+					description="PLG_SYS_TWBOOTSTRAP_FIELD_COM_COLUMNS_DESC" />
+			</fieldset>
+			<fieldset name="advanced">
+				<field
+					name="loadFrontBack"
+					type="list"
+					default="frontend"
+					label="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_FRONTEND_BACKEND_LABEL"
+					description="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_FRONTEND_BACKEND_DESC">
+						<option value="frontend">PLG_SYS_TWBOOTSTRAP_VALUE_FRONTEND</option>
+						<option value="backend">PLG_SYS_TWBOOTSTRAP_VALUE_BACKEND</option>
+						<option value="both">PLG_SYS_TWBOOTSTRAP_VALUE_BOTH</option>
+				</field>
+                <field name="onlyHTML" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_ONLY_HTML_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_ONLY_HTML_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="disableModal" type="radio"
+                       default="0"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_DISABLE_MODAL_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_DISABLE_MODAL_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+			</fieldset>
+	</fields>
+	</config>
+</extension>

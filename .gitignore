@@ -1,0 +1,8 @@
+# eclipse / aptana
+.buildpath
+.settings/
+.project
+# never ignore
+!.gitignore
+!index.html
+!index.php
