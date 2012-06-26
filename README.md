@@ -1,4 +1,4 @@
-Joomla Twitter Bootstrap Plugin
+Twitter Bootstrap Plugin for Joomla!
 ===============
 
 Twitter bootstrap plugin for Joomla 2.5.x.  
