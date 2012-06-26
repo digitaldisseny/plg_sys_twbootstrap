@@ -41,20 +41,25 @@ This way you will ensure that your bootstrap content is working well with and wi
 Now you can, for example, define bootstrap span columns depending on component available width:  
 
     switch ($bsComColumns) {
+        case 4:
+        case 5:
         case 8:
         case 12:
             $bsSpanColumns = 4;
             break;
+        case 6:
+        case 7:
+        case 9:
         case 9:
         case 10:
         case 11:
             $bsSpanColumns = 3;
             break;
         default:
-            $bsSpanColumns = 4;
+            $bsSpanColumns = $bsComColumns;
         break;
     }
-    $bsSpanClass = 'span' . $bsSpanColumns;  
+    $bsSpanClass = 'span' . $bsSpanColumns; 
 
 And then start the content display as:  
 
