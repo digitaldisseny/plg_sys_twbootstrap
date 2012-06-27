@@ -34,9 +34,27 @@ class plgSystemTwbootstrap extends JPlugin
     private $_cssCalls = array();
     private $_jsCalls = array();
 
+    // html positions & associated regular expressions
+    private $_htmlPositions = array(
+            'headtop' => array( 'pattern' => "/(<head>)/isU",
+                                'replacement' => "$1\n\t##CONT##"),
+            'headbottom' => array(  'pattern' => "/(<\/head>)/isU",
+                                    'replacement' => "\n\t##CONT##\n$1"),
+            'bodytop' => array( 'pattern' => "/(<body)(.*)(>)/isU",
+                                'replacement' => "$1$2$3\n\t##CONT##"),
+            'bodybottom' => array(  'pattern' => "/(<\/body>)/isU",
+                                    'replacement' => "\n\t##CONT##\n$1"),
+            'belowtitle' => array(  'pattern' => "/(<\/title>)/isU",
+                                    'replacement' => "$1\n\t##CONT##")
+            );
+    private $_htmlPositionsAvailable = array();
+
     function __construct( &$subject ){
 
         parent::__construct( $subject );
+
+        // set the HTML available positions
+        $this->_htmlPositionsAvailable = array_keys($this->_htmlPositions);
 
         // Load plugin parameters
         $this->_plugin = JPluginHelper::getPlugin( self::TYPE, self::NAME );
@@ -85,7 +103,7 @@ class plgSystemTwbootstrap extends JPlugin
 
     }
 
-    function onBeforeRender(){
+    function onAfterRender(){
 
         // required objects
         $app =& JFactory::getApplication();
@@ -101,6 +119,7 @@ class plgSystemTwbootstrap extends JPlugin
         $disableModal = $this->_params->get('disableModal',1);
         $loadJquery = $this->_params->get('loadJquery', 0);
         $loadBootstrap = $this->_params->get('loadBootstrap',0);
+        $injectPosition = $this->_params->get('injectPosition','headtop');
 
         // check modals
         $disabledTmpls = array('component', 'raw');
@@ -133,8 +152,8 @@ class plgSystemTwbootstrap extends JPlugin
                 }
 
                 // add script to header
-                $doc->addScript($jquery);
-                $doc->addScriptDeclaration('jQuery.noConflict();');
+                $this->_addJsCall($jquery, $injectPosition);
+                $this->_addJsCall('jQuery.noConflict();',$injectPosition,'script');
             }
 
             // load Bootstrap ?
@@ -142,38 +161,28 @@ class plgSystemTwbootstrap extends JPlugin
 
                 // Bootstrap CSS - loaded in header
                 $bootstrapCss = $this->_urlCss . '/bootstrap.min.css';
-                $doc->addStyleSheet($bootstrapCss);
+                $this->_addCssCall($bootstrapCss, $injectPosition);
 
                 // Bootstrap responsive CSS
                 $bootstrapResponsiveCss = $this->_urlCss . '/bootstrap-responsive.min.css';
-                $doc->addStyleSheet($bootstrapResponsiveCss);
+                $this->_addCssCall($bootstrapCss, $injectPosition);
 
                 // bootstrap JS - loaded before body ending
                 $bootstrapJs = $this->_urlJs . '/bootstrap.min.js';
-                $doc->addScript($bootstrapJs);
-                //$this->_addJsCall($bootstrapJs);
+                $this->_addJsCall($bootstrapJs, 'bodybottom');
             }
 
         }
 
-        // get the document body
-        $body = JResponse::getBody();
-
         // JS load
         if (!empty($this->_jsCalls)) {
-            $jsIncludes = implode("\n\t", $this->_jsCalls);
-            $body = str_replace ("</body>", "\n\t" . $jsIncludes . "\n</body>", $body);
+            $this->_loadJS();
         }
 
         // CSS load
         if (!empty($this->_cssCalls)) {
-            $cssHtml = implode("\n\t", $this->_cssCalls);
-            // css loads just after closing the head tag
-            $body = str_replace ("</head>", $cssHtml . "\n</head>", $body);
+            $this->_loadCSS();
         }
-
-        // set the modified body
-        JResponse::setBody($body);
 
         return true;
     }
@@ -189,16 +198,98 @@ class plgSystemTwbootstrap extends JPlugin
         $this->_urlCss = $this->_urlPlugin . "/css";
     }
 
+    /**
+     * Load / inject CSS
+     * @author Roberto Segura - Digital Disseny, S.L.
+     * @version 27/06/2012
+     *
+     */
+    private function _loadCSS() {
+        if (!empty($this->_cssCalls)) {
+            $body = JResponse::getBody();
+            foreach ($this->_cssCalls as $position => $cssCalls) {
+                if (!empty($cssCalls)) {
+                    // if position is defined we append code (inject) to the desired position
+                    if(in_array($position, $this->_htmlPositionsAvailable)) {
+                        // generate the injected code
+                        $cssIncludes = implode("\n\t", $cssCalls);
+                        $pattern = $this->_htmlPositions[$position]['pattern'];
+                        $replacement = str_replace('##CONT##', $cssIncludes, $this->_htmlPositions[$position]['replacement']);
+                        $body = preg_replace($pattern, $replacement, $body);
+                        //die('<h1>CSS:</h1>' . $body .'<h1>Fin</h1>');
+                    // non-defined positions will be threated as css url to load with $doc->addStylesheet
+                    } else  {
+                        $doc = JFactory::getDocument();
+                        foreach ($cssCalls as $cssUrl) {
+                            $doc->addStyleSheet($cssUrl);
+                        }
+                    }
+                }
+            }
+            JResponse::setBody($body);
+            return $body;
+        }
+    }
+
+    /**
+     * Load / inject Javascript
+     * @author Roberto Segura - Digital Disseny, S.L.
+     * @version 27/06/2012
+     *
+     */
+    private function _loadJS() {
+        if (!empty($this->_jsCalls)) {
+            $body = JResponse::getBody();
+            foreach ($this->_jsCalls as $position => $jsCalls) {
+                if (!empty($jsCalls)) {
+                    // if position is defined we append code (inject) to the desired position
+                    if(in_array($position, $this->_htmlPositionsAvailable)) {
+                        // generate the injected code
+                        $jsIncludes = implode("\n\t", $jsCalls);
+                        $pattern = $this->_htmlPositions[$position]['pattern'];
+                        $replacement = str_replace('##CONT##', $jsIncludes, $this->_htmlPositions[$position]['replacement']);
+                        $body = preg_replace($pattern, $replacement, $body);
+                        //$body = str_replace ($pattern, "\n\t" . $jsIncludes, $body);
+                    // non-defined positions will be threated as js url to load with $doc->addScript
+                    } else  {
+                        $doc = JFactory::getDocument();
+                        foreach ($jsCalls as $jsUrl) {
+                            $doc->addScript($jsUrl);
+                        }
+                    }
+                }
+            }
+            JResponse::setBody($body);
+            return $body;
+        }
+    }
+
 	/**
 	* Add a css file declaration
 	* @author Roberto Segura - Digital Disseny, S.L.
 	* @version 23/04/2012
 	*
-	* @param string $cssUrl - url of css file
+	* @param string $cssUrl - url of the CSS file
+    * @param string $position - position where we are going to load JS
 	*/
-	private function _addCssCall($cssUrl) {
-	    $cssCall = '<link rel="stylesheet" type="text/css" href="'.$cssUrl.'" >';
-	    $this->_cssCalls[] = $cssCall;
+	private function _addCssCall($cssUrl, $position = null) {
+
+	    // if position is not available we will try to load the url through $doc->addScript
+	    if (is_null($position) || !in_array($position,$this->_htmlPositionsAvailable)) {
+	        $position = 'addstylesheet';
+	        $cssCall = $jsUrl;
+	    } else {
+	        $cssCall = '<link rel="stylesheet" type="text/css" href="'.$cssUrl.'" >';
+	    }
+
+	    // initialize position
+	    if (!isset($this->_cssCalls[$position])) {
+	        $this->_cssCalls[$position] = array();
+	    }
+
+	    // insert CSS call
+	    $this->_cssCalls[$position][] = $cssCall;
+
 	}
 
 	/**
@@ -208,8 +299,36 @@ class plgSystemTwbootstrap extends JPlugin
 	 *
 	 * @param string $jsUrl - url of the JS file
 	 */
-	private function _addJsCall($jsUrl) {
-	    $jsCall = '<script src="'.$jsUrl.'" type="text/javascript"></script>';
-	    $this->_jsCalls[] = $jsCall;
+
+	/**
+	 * Add a JS script declaration
+	 * @author Roberto Segura - Digital Disseny, S.L.
+	 * @version 27/06/2012
+	 *
+	 * @param string $jsUrl - url of the JS file or script content for type != url
+	 * @param string $position - position where we are going to load JS
+	 * @param string $type - url || script
+	 */
+	private function _addJsCall($jsUrl, $position = null, $type = 'url') {
+
+	    // if position is not available we will try to load the url through $doc->addScript
+	    if (is_null($position) || !in_array($position,$this->_htmlPositionsAvailable)) {
+            $position = 'addscript';
+            $jsCall = $jsUrl;
+	    } else {
+	        if ($type == 'url') {
+	            $jsCall = '<script src="'.$jsUrl.'" type="text/javascript"></script>';
+	        } else {
+	            $jsCall = '<script type="text/javascript">'.$jsUrl.'</script>';
+	        }
+	    }
+
+	    // initialize position
+	    if (!isset($this->_jsCalls[$position])) {
+	        $this->_jsCalls[$position] = array();
+	    }
+
+	    // insert JS call
+	    $this->_jsCalls[$position][] = $jsCall;
 	}
 }

@@ -28,7 +28,7 @@
 				<field
 					name="loadJquery"
 					type="list"
-					default="0"
+					default="1"
 					label="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_JQUERY_LABEL"
 					description="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_JQUERY_DESC">
 						<option value="0">
@@ -69,6 +69,14 @@
 					description="PLG_SYS_TWBOOTSTRAP_FIELD_COM_COLUMNS_DESC" />
 			</fieldset>
 			<fieldset name="advanced">
+				<field name="injectPosition" 
+					type="list" 
+		            label="PLG_SYS_TWBOOTSTRAP_FIELD_INJECT_POSITION_LABEL"
+		            description="PLG_SYS_TWBOOTSTRAP_FIELD_INJECT_POSITION_DESC"
+		            default="belowtitle">
+						<option value="headtop">PLG_SYS_TWBOOTSTRAP_VALUE_HEADTOP</option>
+						<option value="belowtitle">PLG_SYS_TWBOOTSTRAP_VALUE_BELOW_TITLE</option>
+				</field>
 				<field
 					name="loadFrontBack"
 					type="list"
