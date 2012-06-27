@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>roberto@digitaldisseny.com</authorEmail>
 	<authorUrl>www.digitaldisseny.com.com</authorUrl>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
 	<files>
 		<folder>css</folder>

@@ -11,7 +11,7 @@ Our recommendation is to use this plugin to load Bootstrap and disable any other
 
 Version 
 ---------------
-**Plugin version:** 1.0.0  
+**Plugin version:** 1.0.1  
 **Bootstrap Version:** 2.0.4  
 
 Install
@@ -101,6 +101,11 @@ You can improve the code to open new rows when span exceed the available space (
 	</div>
 	
 This way you ensure that your content is going to be shown allways as expected and you allow the user to select the desired bootstrap mode.  
+
+Release History
+---------------
+1.0.0. -> First stable version
+1.0.1. -> Bug fixes and selectable CSS/JS inject position
 
 What's next?
 ---------------
