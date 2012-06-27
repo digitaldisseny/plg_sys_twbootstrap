@@ -11,6 +11,7 @@
 	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
 	<files>
 		<folder>css</folder>
+		<folder>img</folder>
 		<folder>js</folder>
 		<folder>language</folder>
 		<filename plugin="twbootstrap">twbootstrap.php</filename>
