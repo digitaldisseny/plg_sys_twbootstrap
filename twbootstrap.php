@@ -165,7 +165,7 @@ class plgSystemTwbootstrap extends JPlugin
 
                 // Bootstrap responsive CSS
                 $bootstrapResponsiveCss = $this->_urlCss . '/bootstrap-responsive.min.css';
-                $this->_addCssCall($bootstrapCss, $injectPosition);
+                $this->_addCssCall($bootstrapResponsiveCss, $injectPosition);
 
                 // bootstrap JS - loaded before body ending
                 $bootstrapJs = $this->_urlJs . '/bootstrap.min.js';
