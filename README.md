@@ -21,6 +21,22 @@ Clone this repository or just download from:
 [[Download tar.gz](https://github.com/digitaldisseny/plg_sys_twbootstrap/tarball/master)]  
 Then install normally throught Joomla! Extension Manager as package (if you downloaded the compressed version) or from folder (if you cloned the repository).
 
+Customize / Overrides
+---------------
+Since version 1.0.2 the plugin allows you to override the included CSS & JS files. Overrides can help you in some special cases:    
+* You use patched/customized version of bootstrap/jQuery CSS or JS files (not recommended)  
+* New versions of jQuery/bootstrap are released and you want to update them just NOW before this plugin is updated  
+* This plugin is updated but that crashes all! You still can use overrides to force loading the old files  
+  
+If you need to use overrides:  
+1 In your template create the folder  
+	**templates/YOURTEMPLATE/plg_system_twbootstrap**  
+2 Copy the js & css folders from   
+		**plugins/system/twbootstrap**  
+	to:  
+		**templates/YOURTEMPLATE/plg_system_twbootstrap**  
+3 You are done! The plugin will detect any file overriden and load it instead of plugin's default version
+
 Template development improvements
 ---------------
 Plugin defines some constants to make easier template development and avoid views duplicities for static and fluid bootstrap modes. Constants are available to use them anywhere but are designed to use in template views.  
@@ -104,8 +120,9 @@ This way you ensure that your content is going to be shown allways as expected a
 
 Release History
 ---------------
-1.0.0. -> First stable version  
+1.0.2. -> Add template overrides support. 
 1.0.1. -> Bug fixes and selectable CSS/JS inject position  
+1.0.0. -> First stable version  
 
 What's next?
 ---------------

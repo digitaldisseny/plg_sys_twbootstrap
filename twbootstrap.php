@@ -13,6 +13,8 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin' );
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
 
 class plgSystemTwbootstrap extends JPlugin
 {
@@ -24,11 +26,16 @@ class plgSystemTwbootstrap extends JPlugin
 
     // paths
     private $_pathPlugin = null;
+    private $_pathTemplate = null;
+    private $_pathOverrides = null;
 
     // urls
     private $_urlPlugin = null;
     private $_urlJs = null;
     private $_urlCss = null;
+    private $_urlOverrides = null;
+    private $_urlJsOverrides = null;
+    private $_urlCssOverrides = null;
 
     // css & js scripts calls
     private $_cssCalls = array();
@@ -143,7 +150,7 @@ class plgSystemTwbootstrap extends JPlugin
                 switch ($loadJquery) {
                     // load jQuery locally
                     case 1:
-                        $jquery = $this->_urlJs  . '/jquery-1.7.2.min.js';
+                        $jquery = $this->_urlJs  . '/jquery.min.js';
                         break;
                     // load jQuery from Google
                     default:
@@ -189,13 +196,26 @@ class plgSystemTwbootstrap extends JPlugin
 
     private function _initFolders() {
 
+        // active template
+        $currentTemplate = $this->getCurrentTplName();
+
         // paths
         $this->_pathPlugin = JPATH_PLUGINS . DIRECTORY_SEPARATOR . self::TYPE . DIRECTORY_SEPARATOR . self::NAME;
+        $this->_pathTemplate = JPATH_THEMES
+                                . DIRECTORY_SEPARATOR . $currentTemplate;
+        $this->_pathOverrides = $this->_pathTemplate
+                                    . DIRECTORY_SEPARATOR . 'html'
+                                    . DIRECTORY_SEPARATOR . 'plg_' . self::TYPE . '_' . self::NAME;
 
         // urls
-        $this->_urlPlugin = JURI::root()."plugins/" . self::TYPE . "/" . self::NAME;
+        $this->_urlPlugin = JURI::root(true)."plugins/" . self::TYPE . "/" . self::NAME;
         $this->_urlJs = $this->_urlPlugin . "/js";
         $this->_urlCss = $this->_urlPlugin . "/css";
+        $this->_urlOverrides =  JURI::root(true). 'templates/'
+                                    . $currentTemplate
+                                    . '/html/plg_' . self::TYPE . '_' . self::NAME;
+        $this->_urlCssOverrides = $this->_urlOverrides . '/css';
+        $this->_urlJsOverrides = $this->_urlOverrides . '/js';
     }
 
     /**
@@ -274,10 +294,16 @@ class plgSystemTwbootstrap extends JPlugin
 	*/
 	private function _addCssCall($cssUrl, $position = null) {
 
+	    // check for CSS overrides
+	    $overrideUrl = str_replace($this->_urlCss, $this->_urlCssOverrides, $cssUrl);
+	    if ($this->checkUrl($overrideUrl, true)) {
+	        $cssUrl = $overrideUrl;
+	    }
+
 	    // if position is not available we will try to load the url through $doc->addScript
 	    if (is_null($position) || !in_array($position,$this->_htmlPositionsAvailable)) {
 	        $position = 'addstylesheet';
-	        $cssCall = $jsUrl;
+	        $cssCall = $cssUrl;
 	    } else {
 	        $cssCall = '<link rel="stylesheet" type="text/css" href="'.$cssUrl.'" >';
 	    }
@@ -311,6 +337,14 @@ class plgSystemTwbootstrap extends JPlugin
 	 */
 	private function _addJsCall($jsUrl, $position = null, $type = 'url') {
 
+	    // check for overrides
+	    if ($type == 'url') {
+    	    $overrideUrl = str_replace($this->_urlJs, $this->_urlJsOverrides, $jsUrl);
+    	    if ($this->checkUrl($overrideUrl, true)) {
+    	        $jsUrl = $overrideUrl;
+    	    }
+	    }
+
 	    // if position is not available we will try to load the url through $doc->addScript
 	    if (is_null($position) || !in_array($position,$this->_htmlPositionsAvailable)) {
             $position = 'addscript';
@@ -330,5 +364,78 @@ class plgSystemTwbootstrap extends JPlugin
 
 	    // insert JS call
 	    $this->_jsCalls[$position][] = $jsCall;
+	}
+
+	public function checkPath($path, $file = false) {
+	    if ($file && JFile::exists($path)) {
+	        return true;
+	    } elseif (JFolder::exists($path)) {
+	        return true;
+	    }
+	    return false;
+	}
+
+	public function checkUrl($url, $file = false) {
+	    $subpath = str_replace(JURI::root(true), '', $url);
+	    if (empty($subpath)) {
+	        return true;
+	    } else {
+	        $subpath = str_replace('/', DIRECTORY_SEPARATOR, $subpath);
+	        $calculatedPath = JPATH_ROOT . DIRECTORY_SEPARATOR . $subpath;
+	        if ($file && JFile::exists($calculatedPath)) {
+	            return true;
+	        } elseif (JFolder::exists($calculatedPath)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
+	public function getCurrentTplName() {
+
+	    // required objects
+	    $app =& JFactory::getApplication();
+	    $jinput = $app->input;
+	    $db = JFactory::getDBO();
+
+	    // default values
+	    $menuParams = new JRegistry();
+	    $client_id = $app->isSite() ? 0 : 1;
+	    $itemId = $jinput->get('Itemid',0);
+	    $tplName = null;
+
+	    // try to load custom template if assigned
+	    if ($itemId) {
+	        $sql = " SELECT ts.template " .
+	                " FROM #__menu as m " .
+	                " INNER JOIN #__template_styles as ts" .
+	                " ON ts.id = m.template_style_id " .
+	                " WHERE m.id=".(int)$itemId." " .
+	                "";
+	        $db->setQuery($sql);
+	        $tplName = $db->loadResult();
+	    }
+	    // if no itemId or no custom template assigned load default template
+	    if( !$itemId || empty($tplName)) {
+	        $tplName = $this->getDefaultTplName($client_id);
+	    }
+
+	    return $tplName;
+	}
+
+	public function getDefaultTplName($client_id = 0) {
+	    $result = null;
+	    $db = JFactory::getDBO();
+	    $query =  " SELECT template FROM #__template_styles "
+	    ." WHERE client_id=".(int)$client_id." "
+	    ." AND home = 1 ";
+	    $db->setQuery($query);
+	    try {
+	        $result = $db->loadResult();
+	    } catch (JDatabaseException $e) {
+	        return $e;
+	    }
+
+	    return $result;
 	}
 }
