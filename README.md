@@ -11,7 +11,7 @@ Our recommendation is to use this plugin to load Bootstrap and disable any other
 
 Version 
 ---------------
-**Plugin version:** 1.0.1  
+**Plugin version:** 1.0.2  
 **Bootstrap Version:** 2.0.4  
 
 Install
@@ -30,11 +30,11 @@ Since version 1.0.2 the plugin allows you to override the included CSS & JS file
   
 If you need to use overrides:  
 1. In your template create the folder  
-	**templates/YOURTEMPLATE/plg_system_twbootstrap**  
+    **templates/YOURTEMPLATE/plg_system_twbootstrap**  
 2. Copy the js & css folders from   
-		**plugins/system/twbootstrap**  
-	to:  
-		**templates/YOURTEMPLATE/plg_system_twbootstrap**  
+    **plugins/system/twbootstrap**  
+    to:  
+        **templates/YOURTEMPLATE/plg_system_twbootstrap**  
 3. You are done! The plugin will detect any file overriden and load it instead of plugin's default version
 
 Template development improvements
