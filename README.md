@@ -34,7 +34,7 @@ If you need to use overrides:
 2. Copy the js & css folders from   
     **plugins/system/twbootstrap**  
     to:  
-        **templates/YOURTEMPLATE/plg_system_twbootstrap**  
+        **templates/YOURTEMPLATE/html/plg_system_twbootstrap**  
 3. You are done! The plugin will detect any file overriden and load it instead of plugin's default version
 
 Template development improvements
