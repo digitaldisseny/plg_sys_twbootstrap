@@ -29,13 +29,13 @@ Since version 1.0.2 the plugin allows you to override the included CSS & JS file
 * This plugin is updated but that crashes all! You still can use overrides to force loading the old files  
   
 If you need to use overrides:  
-1 In your template create the folder  
+1. In your template create the folder  
 	**templates/YOURTEMPLATE/plg_system_twbootstrap**  
-2 Copy the js & css folders from   
+2. Copy the js & css folders from   
 		**plugins/system/twbootstrap**  
 	to:  
 		**templates/YOURTEMPLATE/plg_system_twbootstrap**  
-3 You are done! The plugin will detect any file overriden and load it instead of plugin's default version
+3. You are done! The plugin will detect any file overriden and load it instead of plugin's default version
 
 Template development improvements
 ---------------
