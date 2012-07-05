@@ -120,7 +120,7 @@ This way you ensure that your content is going to be shown allways as expected a
 
 Release History
 ---------------
-1.0.2. -> Add template overrides support. 
+1.0.2. -> Add template overrides support.  
 1.0.1. -> Bug fixes and selectable CSS/JS inject position  
 1.0.0. -> First stable version  
 
