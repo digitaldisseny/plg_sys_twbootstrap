@@ -208,10 +208,10 @@ class plgSystemTwbootstrap extends JPlugin
                                     . DIRECTORY_SEPARATOR . 'plg_' . self::TYPE . '_' . self::NAME;
 
         // urls
-        $this->_urlPlugin = JURI::root(true)."plugins/" . self::TYPE . "/" . self::NAME;
+        $this->_urlPlugin = JURI::root(true)."/plugins/" . self::TYPE . "/" . self::NAME;
         $this->_urlJs = $this->_urlPlugin . "/js";
         $this->_urlCss = $this->_urlPlugin . "/css";
-        $this->_urlOverrides =  JURI::root(true). 'templates/'
+        $this->_urlOverrides =  JURI::root(true). '/templates/'
                                     . $currentTemplate
                                     . '/html/plg_' . self::TYPE . '_' . self::NAME;
         $this->_urlCssOverrides = $this->_urlOverrides . '/css';
