@@ -1,86 +1,94 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <form>
-<fields name="params">
-<fieldset
-name="twbootstrap"
-label="Twitter Bootstrap Options"
-
->
-
-<field
-name="bsModuleId"
-type="text"
-description="Set CSS id for this module"
-translate_description="false"
-label="CSS Id"
-translate_label="false"
-default=""
-/>
-
-<field
-name="bsExtraClasses"
-type="text"
-description="Add extra classes to the module (no space needed)"
-translate_description="false"
-label="Extra CSS classes"
-translate_label="false"
-default=""
-/>
-
-<field name="bsContainerClass" type="list" default="1"
-label="Show in smartphones"
-description="Show this module on smartphones resolutions"
->
-<option value="container">Static</option>
-<option value="container-fluid">Fluid</option>
-</field>
-
-<field name="bsSpanClass" type="list" default=""
-label="Columns"
-description="Module column width"
-filter="integer"
->
-<option value="">Do not use columns</option>
-<option value="1">span1</option>
-<option value="2">span2</option>
-<option value="3">span3</option>
-<option value="4">span4</option>
-<option value="5">span5</option>
-<option value="6">span6</option>
-<option value="7">span7</option>
-<option value="8">span8</option>
-<option value="9">span9</option>
-<option value="10">span10</option>
-<option value="11">span11</option>
-<option value="12">span12</option>
-</field>
-
-<field name="bsShowPhone" type="list" default="1"
-label="Show in smartphones"
-description="Show this module on smartphones resolutions"
-filter="integer"
->
-<option value="1">JYes</option>
-<option value="0">JNo</option>
-</field>
-
-<field name="bsShowTablet" type="list" default="1"
-label="Show in tablets"
-description="Show this module on tablets resolutions"
-filter="integer"
->
-<option value="1">JYes</option>
-<option value="0">JNo</option>
-</field>
-<field name="bsShowDesktop" type="list" default="1"
-label="Show in desktop"
-description="Show this module on desktop resolutions"
-filter="integer"
->
-<option value="1">JYes</option>
-<option value="0">JNo</option>
-</field>
-
-</fieldset>
-</fields>
+	<fields name="params">
+		<fieldset
+		name="twbootstrap"
+		label="Twitter Bootstrap Options"
+		>
+		
+		<field
+		name="bsModuleId"
+		type="text"
+		description="Set CSS id for this module"
+		translate_description="false"
+		label="CSS Id"
+		translate_label="false"
+		default=""
+		/>
+		
+		<field
+		name="bsExtraClasses"
+		type="text"
+		description="Add extra classes to the module (no space needed)"
+		translate_description="false"
+		label="Extra CSS classes"
+		translate_label="false"
+		default=""
+		/>
+		
+		<field name="bsContainerClass" type="list" default="1"
+		label="Container class"
+		description="Show this module on smartphones resolutions"
+		>
+		<option value="container">Static (px)</option>
+		<option value="container-fluid">Fluid (%)</option>
+		</field>
+		
+		<field name="bsRowClass" type="list" default="1"
+		label="Row class"
+		description="Show this module on smartphones resolutions"
+		>
+		<option value="row">Static (px)</option>
+		<option value="row-fluid">Fluid (%)</option>
+		</field>
+		
+		<field name="bsSpanClass" type="list" default=""
+		label="Columns"
+		description="Module column width"
+		filter="integer"
+		>
+		<option value="">Do not use columns</option>
+		<option value="0">Auto</option>
+		<option value="1">span1</option>
+		<option value="2">span2</option>
+		<option value="3">span3</option>
+		<option value="4">span4</option>
+		<option value="5">span5</option>
+		<option value="6">span6</option>
+		<option value="7">span7</option>
+		<option value="8">span8</option>
+		<option value="9">span9</option>
+		<option value="10">span10</option>
+		<option value="11">span11</option>
+		<option value="12">span12</option>
+		</field>
+		
+		<field name="bsShowPhone" type="list" default="1"
+		label="Show in smartphones"
+		description="Show this module on smartphones resolutions"
+		filter="integer"
+		>
+		<option value="1">JYes</option>
+		<option value="0">JNo</option>
+		</field>
+		
+		<field name="bsShowTablet" type="list" default="1"
+		label="Show in tablets"
+		description="Show this module on tablets resolutions"
+		filter="integer"
+		>
+		<option value="1">JYes</option>
+		<option value="0">JNo</option>
+		</field>
+		<field name="bsShowDesktop" type="list" default="1"
+		label="Show in desktop"
+		description="Show this module on desktop resolutions"
+		filter="integer"
+		>
+		<option value="1">JYes</option>
+		<option value="0">JNo</option>
+		</field>
+		
+		</fieldset>
+	</fields>
 </form>

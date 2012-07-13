@@ -88,6 +88,15 @@
 						<option value="backend">PLG_SYS_TWBOOTSTRAP_VALUE_BACKEND</option>
 						<option value="both">PLG_SYS_TWBOOTSTRAP_VALUE_BOTH</option>
 				</field>
+				<field
+					name="moduleConfig"
+					type="radio"
+					default="1"
+					label="PLG_SYS_TWBOOTSTRAP_FIELD_MODULE_CONFIG_LABEL"
+					description="PLG_SYS_TWBOOTSTRAP_FIELD_MODULE_CONFIG_DESC">
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
                 <field name="onlyHTML" type="radio"
                        default="1"
                        label="PLG_SYS_TWBOOTSTRAP_FIELD_ONLY_HTML_LABEL"

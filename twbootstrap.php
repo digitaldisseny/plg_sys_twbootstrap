@@ -203,10 +203,13 @@ class plgSystemTwbootstrap extends JPlugin
             return false;
         }
 
+        $moduleConfig = $this->_params->get('moduleConfig',1);
+
         // Check we are manipulating a valid form.
         $app = JFactory::getApplication();
 
-        JForm::addFormPath( __DIR__ . DIRECTORY_SEPARATOR . 'forms' );
+        // add our custom forms folder
+        JForm::addFormPath($this->_pathPlugin . DIRECTORY_SEPARATOR . 'forms');
 
         // Extra parameters for menu edit
         if ($form->getName() == 'com_menus.item') {
@@ -232,9 +235,9 @@ class plgSystemTwbootstrap extends JPlugin
                     </form>
                     ');
             return true;
-            // extra parameters to module edit
-        } elseif ( $form->getName() == 'com_modules.module') {
-            $form->load('bsmodule',false);
+        // extra parameters to module edit
+        } elseif ( $moduleConfig && $form->getName() == 'com_modules.module') {
+            $form->loadFile('bsmodule',false);
         }
 
         return true;
