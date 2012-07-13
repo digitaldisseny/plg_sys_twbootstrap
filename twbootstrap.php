@@ -194,6 +194,52 @@ class plgSystemTwbootstrap extends JPlugin
         return true;
     }
 
+    public function onContentPrepareForm($form, $data)
+    {
+        // Check we have a form
+        if (!($form instanceof JForm))
+        {
+            $this->_subject->setError('JERROR_NOT_A_FORM');
+            return false;
+        }
+
+        // Check we are manipulating a valid form.
+        $app = JFactory::getApplication();
+
+        JForm::addFormPath( __DIR__ . DIRECTORY_SEPARATOR . 'forms' );
+
+        // Extra parameters for menu edit
+        if ($form->getName() == 'com_menus.item') {
+            $form->load('
+                    <form>
+                    <fields name="params" >
+                    <fieldset
+                    name="easylayouts"
+                    label="Twitter Bootstrap Options"
+                    >
+                    <field
+                    name="ddel_modcssid"
+                    type="text"
+                    description="Set CSS id for this module"
+                    translate_description="false"
+                    label="CSS Id"
+                    translate_label="false"
+                    default=""
+                    />
+
+                    </fieldset>
+                    </fields>
+                    </form>
+                    ');
+            return true;
+            // extra parameters to module edit
+        } elseif ( $form->getName() == 'com_modules.module') {
+            $form->load('bsmodule',false);
+        }
+
+        return true;
+    }
+
     private function _initFolders() {
 
         // active template
