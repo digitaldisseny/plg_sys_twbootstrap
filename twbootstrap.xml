@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>roberto@digitaldisseny.com</authorEmail>
 	<authorUrl>www.digitaldisseny.com.com</authorUrl>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
 	<files>
 		<folder>css</folder>
@@ -21,6 +21,9 @@
 		<!-- en-GB -->
 		<language tag="en-GB">language/en-GB/en-GB.plg_system_twbootstrap.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.plg_system_twbootstrap.sys.ini</language>
+		<!-- es-ES -->
+		<language tag="es-ES">language/es-ES/en-ES.plg_system_twbootstrap.ini</language>
+		<language tag="es-ES">language/es-ES/es-ES.plg_system_twbootstrap.sys.ini</language>
 	</languages>
 	<config>
 	<fields name="params">
@@ -50,8 +53,8 @@
 						<option value="1">JYES</option>
 						<option value="0">JNO</option>
 				</field>
-				<field name="bootstrapMode" 
-					type="list" 
+				<field name="bootstrapMode"
+					type="list"
 		            label="PLG_SYS_TWBOOTSTRAP_FIELD_BOOTSTRAP_MODE_LABEL"
 		            description="PLG_SYS_TWBOOTSTRAP_FIELD_BOOTSTRAP_MODE_DESC"
 		            default="fluid">
@@ -69,8 +72,8 @@
 					description="PLG_SYS_TWBOOTSTRAP_FIELD_COM_COLUMNS_DESC" />
 			</fieldset>
 			<fieldset name="advanced">
-				<field name="injectPosition" 
-					type="list" 
+				<field name="injectPosition"
+					type="list"
 		            label="PLG_SYS_TWBOOTSTRAP_FIELD_INJECT_POSITION_LABEL"
 		            description="PLG_SYS_TWBOOTSTRAP_FIELD_INJECT_POSITION_DESC"
 		            default="belowtitle">
