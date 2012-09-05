@@ -11,7 +11,7 @@ Our recommendation is to use this plugin to load Bootstrap and disable any other
 
 Version 
 ---------------
-**Plugin version:** 1.0.2  
+**Plugin version:** 1.0.3  
 **Bootstrap Version:** 2.0.4  
 
 Install
@@ -120,6 +120,7 @@ This way you ensure that your content is going to be shown allways as expected a
 
 Release History
 ---------------
+1.0.3. -> Added spanish language & fix code to be Joomla! standard compliant.  
 1.0.2. -> Add template overrides support.  
 1.0.1. -> Bug fixes and selectable CSS/JS inject position  
 1.0.0. -> First stable version  
