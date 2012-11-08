@@ -2,12 +2,12 @@
 <extension version="2.5" type="plugin" group="system" method="upgrade">
 	<name>PLG_SYS_TWBOOTSTRAP</name>
 	<author>Digital Disseny, S.L.</author>
-	<creationDate>June 2012</creationDate>
+	<creationDate>November 2012</creationDate>
 	<copyright>Copyright (C) 2012 Digital Disseny, S.L. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>roberto@digitaldisseny.com</authorEmail>
 	<authorUrl>www.digitaldisseny.com.com</authorUrl>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
 	<files>
 		<folder>css</folder>
