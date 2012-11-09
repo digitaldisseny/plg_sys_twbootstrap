@@ -109,6 +109,304 @@
                     <option value="0">JNO</option>
                 </field>
 			</fieldset>
+			<fieldset name="TWBOOTSTRAP_CUSTOMCSS">
+                <field name="cssReset" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_RESET_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_RESET_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer1" hr="true" />
+				<field type="spacer" name="myspacer2" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_GRID_SYSTEM" />
+				<field type="spacer" name="myspacer3" hr="true" />
+                <field name="cssScafolding" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_SCAFFOLDING_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_SCAFFOLDING_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssGrid" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_GRID_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_GRID_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssLayouts" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_LAYOUTS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_LAYOUTS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer4" hr="true" />
+				<field type="spacer" name="myspacer5" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_BASE" />
+				<field type="spacer" name="myspacer6" hr="true" />
+                <field name="cssType" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_TYPE_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_TYPE_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssCode" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_CODE_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_CODE_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssForms" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_FORMS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_FORMS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssTables" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_TABLES_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_TABLES_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer7" hr="true" />
+				<field type="spacer" name="myspacer8" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_COMP_COMMON" />
+				<field type="spacer" name="myspacer9" hr="true" />
+                <field name="cssSprites" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_SPRITES_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_SPRITES_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssDropdowns" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_DROPDOWNS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_DROPDOWNS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssWells" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_WELLS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_WELLS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssWells" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_WELLS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_WELLS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssAnimations" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_ANIMATIONS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_ANIMATIONS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssClose" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_CLOSE_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_CLOSE_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer10" hr="true" />
+				<field type="spacer" name="myspacer11" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_COMP_BUTTONS_ALERTS" />
+				<field type="spacer" name="myspacer12" hr="true" />
+                <field name="cssButtons" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_BUTTONS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_BUTTONS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssButtonGroups" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_BUTTON_GROUPS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_BUTTON_GROUPS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssAlerts" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_ALERTS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_ALERTS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer13" hr="true" />
+				<field type="spacer" name="myspacer14" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_COMP_NAV" />
+				<field type="spacer" name="myspacer15" hr="true" />
+                <field name="cssNavs" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_NAVS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_NAVS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssNavbars" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_NAVBARS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_NAVBARS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssBreadcrumbs" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_BREADCRUMBS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_BREADCRUMBS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssPagination" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_PAGINATION_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_PAGINATION_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssPager" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_PAGER_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_PAGER_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer16" hr="true" />
+				<field type="spacer" name="myspacer17" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_COMP_POPOVERS" />
+				<field type="spacer" name="myspacer18" hr="true" />
+                <field name="cssModals" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_MODALS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_MODALS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssTooltips" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_TOOLTIPS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_TOOLTIPS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="cssPopovers" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_POPOVERS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_POPOVERS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer19" hr="true" />
+				<field type="spacer" name="myspacer20" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_COMP_MISC" />
+				<field type="spacer" name="myspacer21" hr="true" />
+				<field name="cssThumbnails" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_THUMBNAILS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_THUMBNAILS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="cssMedia" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_MEDIA_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_MEDIA_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="cssLabelsBadges" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_LABEL_BADGES_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_LABEL_BADGES_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="cssProgressBars" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_PROGRESS_BARS_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_PROGRESS_BARS_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="cssAccordion" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_ACCORDION_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_ACCORDION_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                 <field name="cssCarousel" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_CAROUSEL_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_CAROUSEL_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="cssHeroUnit" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_HERO_UNIT_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_HERO_UNIT_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field type="spacer" name="myspacer22" hr="true" />
+				<field type="spacer" name="myspacer23" label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_EXTRA" />
+				<field type="spacer" name="myspacer24" hr="true" />
+				<field name="cssUtilities" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_UTILITIES_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_UTILITIES_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="cssResponsive" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_RESPONSIVE_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_CSS_RESPONSIVE_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+			</fieldset>
 	</fields>
 	</config>
 </extension>
