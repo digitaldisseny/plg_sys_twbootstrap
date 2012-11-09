@@ -407,6 +407,112 @@
                     <option value="0">JNO</option>
                 </field>
 			</fieldset>
+			<fieldset name="TWBOOTSTRAP_CUSTOMJS">
+				<field name="jsAffix" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_AFFIX_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_AFFIX_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsAlert" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_ALERT_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_ALERT_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsButton" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_BUTTON_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_BUTTON_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsCarousel" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_CAROUSEL_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_CAROUSEL_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsCollapse" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_COLLAPSE_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_COLLAPSE_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsDropdown" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_DROPDOWN_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_DROPDOWN_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsModal" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_MODAL_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_MODAL_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsPopover" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_POPOVER_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_POPOVER_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsScrollspy" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_SCROLLSPY_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_SCROLLSPY_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsTab" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TAB_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TAB_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsTooltip" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TOOLTIP_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TOOLTIP_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsTransition" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TRANSITION_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TRANSITION_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+				<field name="jsTypeahead" type="radio"
+                       default="1"
+                       label="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TYPEAHEAD_LABEL"
+                       description="PLG_SYS_TWBOOTSTRAP_FIELD_CUSTOM_JS_TYPEAHEAD_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+			</fieldset>
 	</fields>
 	</config>
 </extension>
