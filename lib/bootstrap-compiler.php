@@ -44,7 +44,7 @@ class BootstrapCompiler extends PhpClosure
 	 */
 	function _getCacheFileName()
 	{
-		return $this->_cache_dir . 'bootstrap.min.js';
+		return $this->_cache_dir . '/bootstrap-custom.min.js';
 	}
 
 	/**

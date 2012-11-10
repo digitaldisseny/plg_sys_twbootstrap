@@ -37,7 +37,7 @@
  *   ->useClosureLibrary()
  *   ->cacheDir("/tmp/js-cache/")
  *   ->write();
- * 
+ *
  * See http://code.google.com/closure/compiler/docs/api-ref.html for more
  * details on the compiler options.
  */
@@ -141,7 +141,7 @@ class PhpClosure {
     $this->_mode = "SIMPLE_OPTIMIZATIONS";
     return $this;
   }
-  
+
   /**
    * Sets the compilation mode to advanced optimizations (recommended).
    */
@@ -206,11 +206,11 @@ class PhpClosure {
         // No recompile needed, but see if we can send a 304 to the browser.
         $cache_mtime = filemtime($cache_file);
         $etag = md5_file($cache_file);
-        header("Last-Modified: ".gmdate("D, d M Y H:i:s", $cache_mtime)." GMT"); 
-        header("Etag: $etag"); 
-        if (@strtotime(@$_SERVER['HTTP_IF_MODIFIED_SINCE']) == $cache_mtime || 
-            @trim(@$_SERVER['HTTP_IF_NONE_MATCH']) == $etag) { 
-          header("HTTP/1.1 304 Not Modified"); 
+        header("Last-Modified: ".gmdate("D, d M Y H:i:s", $cache_mtime)." GMT");
+        header("Etag: $etag");
+        if (@strtotime(@$_SERVER['HTTP_IF_MODIFIED_SINCE']) == $cache_mtime ||
+            @trim(@$_SERVER['HTTP_IF_NONE_MATCH']) == $etag) {
+          header("HTTP/1.1 304 Not Modified");
         } else {
           // Read the cache file and send it to the client.
           echo file_get_contents($cache_file);
@@ -266,7 +266,7 @@ class PhpClosure {
           break;
       }
     }
-    
+
     $result = "";
     if ($this->_debug) {
       $result = "if(window.console&&window.console.log){\r\n" .
@@ -286,7 +286,7 @@ class PhpClosure {
 
     return $result;
   }
-    
+
   function _printWarnings($warnings, $level="log") {
     $result = "";
     foreach ($warnings as $warning) {
@@ -366,9 +366,9 @@ class PhpClosure {
       fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
       fputs($fp, "Content-length: ". strlen($data) ."\r\n");
       fputs($fp, "Connection: close\r\n\r\n");
-      fputs($fp, $data); 
+      fputs($fp, $data);
 
-      $result = ""; 
+      $result = "";
       while (!feof($fp)) {
         $result .= fgets($fp, 128);
       }

@@ -256,10 +256,17 @@ class PlgSystemTwbootstrap extends JPlugin
 					ob_start();
 					$bsCompiler->write();
 					$content = ob_end_clean();
+
+					// Load the Bootstrap customized version
+					$bootstrapJs = $this->_urlJs . '/bootstrap-custom.min.js';
+				}
+				else
+				{
+					// Load the Bootstrap standard version
+					$bootstrapJs = $this->_urlJs . '/bootstrap.min.js';
 				}
 
 				// Bootstrap JS - loaded before body ending
-				$bootstrapJs = $this->_urlJs . '/bootstrap.min.js';
 				$this->_addJsCall($bootstrapJs, 'bodybottom');
 			}
 
