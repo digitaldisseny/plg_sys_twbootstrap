@@ -58,6 +58,22 @@ class PlgSystemTwbootstrap extends JPlugin
 
 	private $_jsCalls  = array();
 
+	private $_bootstrapJsParams = array(
+			'jsAffix'      => 'bootstrap-affix.js',
+			'jsAlert'      => 'bootstrap-alert.js',
+			'jsButton'     => 'bootstrap-button.js',
+			'jsCarousel'   => 'bootstrap-carousel.js',
+			'jsCollapse'   => 'bootstrap-collapse.js',
+			'jsDropdown'   => 'bootstrap-dropdown.js',
+			'jsModal'      => 'bootstrap-modal.js',
+			'jsTooltip'    => 'bootstrap-tooltip.js',
+			'jsPopover'    => 'bootstrap-popover.js',
+			'jsScrollspy'  => 'bootstrap-scrollspy.js',
+			'jsTab'        => 'bootstrap-tab.js',
+			'jsTransition' => 'bootstrap-transition.js',
+			'jsTypeahead'  => 'bootstrap-typeahead.js'
+		);
+
 	// HTML positions & associated regular expressions
 	private $_htmlPositions = array(
 			'headtop' => array( 'pattern' => "/(<head>)/isU",
@@ -70,7 +86,7 @@ class PlgSystemTwbootstrap extends JPlugin
 									'replacement' => "\n\t##CONT##\n$1"),
 			'belowtitle' => array(  'pattern' => "/(<\/title>)/isU",
 									'replacement' => "$1\n\t##CONT##")
-			);
+		);
 
 	private $_htmlPositionsAvailable = array();
 
@@ -218,6 +234,29 @@ class PlgSystemTwbootstrap extends JPlugin
 				// Bootstrap responsive CSS
 				$bootstrapResponsiveCss = $this->_urlCss . '/bootstrap-responsive.min.css';
 				$this->_addCssCall($bootstrapResponsiveCss, $injectPosition);
+
+				$activeJsFiles = $this->getBootstrapActiveJsFiles();
+
+				// User has chosen some files (and not all to be loaded)
+				if ($activeJsFiles && count($activeJsFiles) != count($this->_bootstrapJsParams))
+				{
+					require_once __DIR__ . '/lib/bootstrap-compiler.php';
+					$bsCompiler = new BootstrapCompiler;
+					foreach ($activeJsFiles as $file)
+					{
+						$bsCompiler->add(__DIR__ . '/js/bootstrap/' . $file);
+					}
+					$bsCompiler->simpleMode();
+
+					// Advanced mode fails to compile bootstrap | $c->advancedMode()
+					$bsCompiler->useClosureLibrary();
+
+					// TODO : Change or make sure path exists and is writable.
+					$bsCompiler->cacheDir(__DIR__ . '/js/');
+					ob_start();
+					$bsCompiler->write();
+					$content = ob_end_clean();
+				}
 
 				// Bootstrap JS - loaded before body ending
 				$bootstrapJs = $this->_urlJs . '/bootstrap.min.js';
@@ -508,6 +547,27 @@ class PlgSystemTwbootstrap extends JPlugin
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Get the list of active bootstrap files
+	 *
+	 * @return   array  Active Bootstrap JS files to load
+	 */
+	function getBootstrapActiveJsFiles()
+	{
+		$files = array();
+		if (!empty($this->_bootstrapJsParams))
+		{
+			foreach ($this->_bootstrapJsParams as $paramName => $jsFile)
+			{
+				if ($this->_params->get($paramName, 0))
+				{
+					$files[] = $jsFile;
+				}
+			}
+		}
+		return $files;
 	}
 
 	/**
