@@ -183,6 +183,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		$loadJquery     = $this->_params->get('loadJquery', 0);
 		$loadBootstrap  = $this->_params->get('loadBootstrap', 0);
 		$injectPosition = $this->_params->get('injectPosition', 'headtop');
+		$updated 		= $this->_params->get('updated', '0000-00-00 00:00:00');
 
 		// Check modals
 		$disabledTmpls = array('component', 'raw');
@@ -240,21 +241,23 @@ class PlgSystemTwbootstrap extends JPlugin
 				// User has chosen some files (and not all to be loaded)
 				if ($activeJsFiles && count($activeJsFiles) != count($this->_bootstrapJsParams))
 				{
-					require_once __DIR__ . '/lib/bootstrap-compiler.php';
-					$bsCompiler = new BootstrapCompiler;
+					require_once __DIR__ . '/lib/php-closure/my-php-closure.php';
+					$jsCompiler = new MyPhpClosure;
 					foreach ($activeJsFiles as $file)
 					{
-						$bsCompiler->add(__DIR__ . '/js/bootstrap/' . $file);
+						$jsCompiler->add(__DIR__ . '/js/bootstrap/' . $file);
 					}
-					$bsCompiler->simpleMode();
+					$jsCompiler->simpleMode();
 
 					// Advanced mode fails to compile bootstrap | $c->advancedMode()
-					$bsCompiler->useClosureLibrary();
+					$jsCompiler->useClosureLibrary();
+
+					$jsCompiler->setUpdated($updated);
 
 					// TODO : Change or make sure path exists and is writable.
-					$bsCompiler->cacheDir(__DIR__ . '/js/');
+					$jsCompiler->cacheDir(__DIR__ . '/js');
 					ob_start();
-					$bsCompiler->write();
+					$jsCompiler->write();
 					$content = ob_end_clean();
 
 					// Load the Bootstrap customized version

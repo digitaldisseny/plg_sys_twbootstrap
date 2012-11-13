@@ -11,6 +11,7 @@
 	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
 	<files>
 		<folder>css</folder>
+    <folder>fields</folder>
 		<folder>img</folder>
 		<folder>js</folder>
 		<folder>language</folder>
@@ -19,6 +20,10 @@
 		<filename plugin="twbootstrap">twbootstrap.php</filename>
 		<filename>index.html</filename>
 	</files>
+  <media destination="plg_system_twbootstrap" folder="media">
+    <folder>css</folder>
+    <folder>js</folder>
+  </media>
 	<languages>
 		<!-- en-GB -->
 		<language tag="en-GB">language/en-GB/en-GB.plg_system_twbootstrap.ini</language>
@@ -28,7 +33,7 @@
 		<language tag="es-ES">language/es-ES/es-ES.plg_system_twbootstrap.sys.ini</language>
 	</languages>
 	<config>
-	<fields name="params">
+	<fields name="params" addfieldpath="plugins/system/twbootstrap/fields">
 			<fieldset name="basic">
 				<field
 					name="loadJquery"
@@ -63,6 +68,7 @@
 						<option value="fluid">PLG_SYS_TWBOOTSTRAP_VALUE_FLUID</option>
 						<option value="static">PLG_SYS_TWBOOTSTRAP_VALUE_STATIC</option>
 				</field>
+        <field name="updated" type="hiddendate" />
 				<field
 					name="comColumns"
 					type="integer"
