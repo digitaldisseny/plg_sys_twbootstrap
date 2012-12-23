@@ -75,7 +75,7 @@
       if (this.transitioning) return
       dimension = this.dimension()
       this.reset(this.$element[dimension]())
-      this.transition('removeClass', $.Event('hide'), 'hidden')
+      this.transition('removeClass', $.Event('hideme'), 'hidden')
       this.$element[dimension](0)
     }
 

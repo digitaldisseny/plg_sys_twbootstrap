@@ -2,6 +2,11 @@
 .buildpath
 .settings/
 .project
+
+# compiled files
+/css/boostrap-custom.min.css
+/js/bootstrap-custom.min.js
+
 # never ignore
 !.gitignore
 !index.html

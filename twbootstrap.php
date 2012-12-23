@@ -58,7 +58,60 @@ class PlgSystemTwbootstrap extends JPlugin
 
 	private $_jsCalls  = array();
 
-	private $_bootstrapJsParams = array(
+	private $_bootstrapCssFiles = array(
+			// CSS Reset
+			'cssReset'        => 'reset.less',
+			// Core variables and mixins
+			'cssVariables'    => 'variables.less',
+			'cssMixins'       => 'mixins.less',
+			// Grid system and page structure
+			'cssScafolding'   => 'scaffolding.less',
+			'cssGrid'         => 'grid.less',
+			'cssLayouts'      => 'layouts.less',
+			// Grid system and page structure
+			'cssType'         => 'type.less',
+			'cssCode'         => 'code.less',
+			'cssForms'        => 'forms.less',
+			'cssTables'       => 'tables.less',
+			// Grid system and page structure
+			'cssSprites'      => 'sprites.less',
+			'cssDropdowns'    => 'dropdowns.less',
+			'cssWells'        => 'wells.less',
+			'cssAnimations'   => 'component-animations.less',
+			'cssClose'        => 'close.less',
+			// Grid system and page structure
+			'cssButtons'      => 'buttons.less',
+			'cssButtonGroups' => 'button-groups.less',
+			'cssAlerts'       => 'alerts.less',
+			// Components: Nav
+			'cssNavs'         => 'navs.less',
+			'cssNavbars'      => 'navbar.less',
+			'cssBreadcrumbs'  => 'breadcrumbs.less',
+			'cssPagination'   => 'pagination.less',
+			'cssPager'        => 'pager.less',
+			// Components: Popovers
+			'cssModals'       => 'modals.less',
+			'cssTooltips'     => 'tooltip.less',
+			'cssPopovers'     => 'popovers.less',
+			// Components: Misc
+			'cssThumbnails'   => 'thumbnails.less',
+			'cssMedia'        => 'media.less',
+			'cssLabelsBadges' => 'labels-badges.less',
+			'cssProgressBars' => 'progress-bars.less',
+			'cssAccordion'    => 'accordion.less',
+			'cssCarousel'     => 'carousel.less',
+			'cssHeroUnit'     => 'hero-unit.less',
+			// Utility classes
+			'jsTypeahead'     => 'utilities.less',
+			// Responsive
+			'cssResponsive'   => 'responsive-utilities.less',
+			'cssResp1200aMin' => 'responsive-1200px-min.less',
+			'cssResp768a979'  => 'responsive-768px-979px.less',
+			'cssResp767aMax'  => 'responsive-767px-max.less',
+			'cssRespNav'      => 'responsive-navbar.less'
+	);
+
+	private $_bootstrapJsFiles = array(
 			'jsAffix'      => 'bootstrap-affix.js',
 			'jsAlert'      => 'bootstrap-alert.js',
 			'jsButton'     => 'bootstrap-button.js',
@@ -72,7 +125,7 @@ class PlgSystemTwbootstrap extends JPlugin
 			'jsTab'        => 'bootstrap-tab.js',
 			'jsTransition' => 'bootstrap-transition.js',
 			'jsTypeahead'  => 'bootstrap-typeahead.js'
-		);
+	);
 
 	// HTML positions & associated regular expressions
 	private $_htmlPositions = array(
@@ -160,6 +213,77 @@ class PlgSystemTwbootstrap extends JPlugin
 	}
 
 	/**
+	 * This event is triggered immediately before pushing the document buffers into the template placeholders,
+	 * retrieving data from the document and pushing it into the into the JResponse buffer.
+	 * http://docs.joomla.org/Plugin/Events/System
+	 *
+	 * @return boolean
+	 */
+	function onBeforeRender()
+	{
+		/*
+		// Validate view
+		if (!$this->_validateUrl())
+		{
+			return true;
+		}
+		*/
+		// Required objects
+		$app        = JFactory::getApplication();
+		$doc        = JFactory::getDocument();
+
+		if (!$app->isSite())
+		{
+			return true;
+		}
+		$pageParams = $app->getParams();
+
+		// Disable Default Bootstrap
+		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+
+		// If we are going to load jQuery disable any default jQuery loaded
+		if ($this->_params->get('loadJquery', 0))
+		{
+			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
+			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
+		}
+
+		// Check if we have to disable Mootools for this item
+		$bsEnabled = $pageParams->get('twbs_enabled', $this->_params->get('defaultMode', 0));
+		if ($bsEnabled)
+		{
+			// Function used to replace window.addEvent()
+			$doc->addScriptDeclaration("function do_nothing() { return; }");
+
+			// Disable mootools javascript
+			/*
+			unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools-core.js']);
+			unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools-more.js']);
+			unset($doc->_scripts[JURI::root(true) . '/media/system/js/core.js']);
+			unset($doc->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
+			unset($doc->_scripts[JURI::root(true) . '/media/system/js/modal.js']);
+			unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools.js']);
+			unset($doc->_scripts[JURI::root(true) . '/plugins/system/mtupgrade/mootools.js']);
+*/
+			// Disable css stylesheets
+			unset($doc->_styleSheets[JURI::root(true) . '/media/system/css/modal.css']);
+
+			// Disable 3rd party extensions added by the user
+			if ($manualDisable = $this->_params->get('manualDisable', null))
+			{
+				$scripts = explode(',', $manualDisable);
+				foreach ($scripts as $script)
+				{
+					// Try to disable relative and full URLs
+					unset($doc->_scripts[$script]);
+					unset($doc->_scripts[JURI::root(true) . $script]);
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * This event is triggered after pushing the document buffers into the template placeholders,
 	 * retrieving data from the document and pushing it into the into the JResponse buffer.
 	 * http://docs.joomla.org/Plugin/Events/System
@@ -227,19 +351,51 @@ class PlgSystemTwbootstrap extends JPlugin
 			// Load Bootstrap ?
 			if ($loadBootstrap)
 			{
-
 				// Bootstrap CSS - loaded in header
 				$bootstrapCss = $this->_urlCss . '/bootstrap.min.css';
-				$this->_addCssCall($bootstrapCss, $injectPosition);
 
 				// Bootstrap responsive CSS
 				$bootstrapResponsiveCss = $this->_urlCss . '/bootstrap-responsive.min.css';
-				$this->_addCssCall($bootstrapResponsiveCss, $injectPosition);
 
-				$activeJsFiles = $this->getBootstrapActiveJsFiles();
+				$activeJsFiles  = $this->getBootstrapActiveJsFiles();
+				$activeCssFiles = $this->getBootstrapActiveCssFiles();
+
+				if (count($activeCssFiles) != count($this->_bootstrapCssFiles))
+				{
+					$sourceDir      = dirname(__FILE__) . '/less';
+					$outputDir      = dirname(__FILE__) . '/css';
+					$outputFilename = 'boostrap-custom.min.css';
+
+					require_once __DIR__ . '/lib/lessphp/twbs-lessc.php';
+					$lessc = new JoomlaLessCompiler;
+					$lessc->setUpdated($updated);
+					$lessc->setFormatter("compressed");
+					$sourceCss = '';
+					$outputCss = '';
+					foreach ($activeCssFiles as $file)
+					{
+						$lessc->addLessFile($sourceDir . '/' . $file);
+					}
+
+					try
+					{
+						$lessc->createCssFile($outputDir . '/' . $outputFilename);
+						$bootstrapCss           = $this->_urlCss . '/' . $outputFilename;
+						$bootstrapResponsiveCss = null;
+					}
+					catch (exception $e)
+					{
+						echo 'LESS compile error: ' . implode('<br />', $lessc->errors);
+					}
+				}
+				$this->_addCssCall($bootstrapCss, $injectPosition);
+				if (!is_null($bootstrapResponsiveCss))
+				{
+					$this->_addCssCall($bootstrapResponsiveCss, $injectPosition);
+				}
 
 				// User has chosen some files (and not all to be loaded)
-				if ($activeJsFiles && count($activeJsFiles) != count($this->_bootstrapJsParams))
+				if ($activeJsFiles && count($activeJsFiles) != count($this->_bootstrapJsFiles))
 				{
 					require_once __DIR__ . '/lib/php-closure/my-php-closure.php';
 					$jsCompiler = new MyPhpClosure;
@@ -560,20 +716,41 @@ class PlgSystemTwbootstrap extends JPlugin
 	}
 
 	/**
-	 * Get the list of active bootstrap files
+	 * Get the list of active bootstrap JS files
 	 *
 	 * @return   array  Active Bootstrap JS files to load
 	 */
 	function getBootstrapActiveJsFiles()
 	{
 		$files = array();
-		if (!empty($this->_bootstrapJsParams))
+		if (!empty($this->_bootstrapJsFiles))
 		{
-			foreach ($this->_bootstrapJsParams as $paramName => $jsFile)
+			foreach ($this->_bootstrapJsFiles as $paramName => $jsFile)
 			{
 				if ($this->_params->get($paramName, 0))
 				{
 					$files[] = $jsFile;
+				}
+			}
+		}
+		return $files;
+	}
+
+	/**
+	 * Get the list of active bootstrap CSS files
+	 *
+	 * @return   array  Active Bootstrap CSS files to load
+	 */
+	function getBootstrapActiveCssFiles()
+	{
+		$files = array();
+		if (!empty($this->_bootstrapCssFiles))
+		{
+			foreach ($this->_bootstrapCssFiles as $paramName => $cssFile)
+			{
+				if ($this->_params->get($paramName, 0) || $paramName == 'cssVariables' || $paramName == 'cssMixins' )
+				{
+					$files[] = $cssFile;
 				}
 			}
 		}
