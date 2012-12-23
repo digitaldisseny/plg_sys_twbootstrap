@@ -250,7 +250,6 @@ class PlgSystemTwbootstrap extends JPlugin
 		// Required objects
 		$app        = JFactory::getApplication();
 		$doc        = JFactory::getDocument();
-
 		$pageParams = $app->getParams();
 
 		// Disable Default Bootstrap
@@ -267,12 +266,6 @@ class PlgSystemTwbootstrap extends JPlugin
 		$bsEnabled = $pageParams->get('twbs_enabled', $this->_params->get('defaultMode', 0));
 		if ($bsEnabled)
 		{
-			// Function used to replace window.addEvent()
-			$doc->addScriptDeclaration("function do_nothing() { return; }");
-
-			// Disable css stylesheets
-			unset($doc->_styleSheets[JURI::root(true) . '/media/system/css/modal.css']);
-
 			// Disable 3rd party extensions added by the user
 			if ($manualDisable = $this->_params->get('manualDisable', null))
 			{
@@ -304,8 +297,9 @@ class PlgSystemTwbootstrap extends JPlugin
 		}
 
 		// Required objects
-		$app = JFactory::getApplication();
-		$doc = JFactory::getDocument();
+		$app        = JFactory::getApplication();
+		$doc        = JFactory::getDocument();
+		$pageParams = $app->getParams();
 
 		// URL params
 		$jinput = $app->input;
@@ -316,9 +310,9 @@ class PlgSystemTwbootstrap extends JPlugin
 		$onlyHTML       = $this->_params->get('onlyHTML', 1);
 		$disableModal   = $this->_params->get('disableModal', 1);
 		$loadJquery     = $this->_params->get('loadJquery', 0);
-		$loadBootstrap  = $this->_params->get('loadBootstrap', 0);
 		$injectPosition = $this->_params->get('injectPosition', 'headtop');
-		$updated 		= $this->_params->get('updated', '0000-00-00 00:00:00');
+		$updated        = $this->_params->get('updated', '0000-00-00 00:00:00');
+		$loadBootstrap  = $pageParams->get('twbs_enabled', $this->_params->get('defaultMode', 0));
 
 		// Check modals
 		$disabledTmpls = array('component', 'raw');
@@ -454,6 +448,51 @@ class PlgSystemTwbootstrap extends JPlugin
 			$this->_loadJS();
 		}
 
+		return true;
+	}
+
+	/**
+	* Change forms before they are shown to the user
+	*
+	* @param   JForm  $form  JForm object
+	* @param   array  $data  Data array
+	*
+	* @return boolean
+	*/
+	public function onContentPrepareForm($form, $data)
+	{
+		// Check we have a form
+		if (!($form instanceof JForm))
+		{
+			$this->_subject->setError('JERROR_NOT_A_FORM');
+			return false;
+		}
+
+		// Extra parameters for menu edit
+		if ($form->getName() == 'com_menus.item')
+		{
+			$form->load('
+					<form>
+					<fields name="params" >
+					<fieldset
+					name="Bootstrap enable/disable"
+					label="PLG_SYS_TWBOOTSTRAP_OPTIONS"
+					>
+					<field
+					name="twbs_enabled"
+					type="radio"
+					label="PLG_SYS_TWBOOTSTRAP_FIELD_ENABLE_BOOTSTRAP_LABEL"
+					description="PLG_SYS_TWBOOTSTRAP_FIELD_ENABLE_BOOTSTRAP_DESC"
+					default="' . $this->_params->get('twbs_defmode', 0) . '"
+					>
+							<option value="1">JYES</option>
+							<option value="0">JNO</option>
+					</field>
+					</fieldset>
+					</fields>
+					</form>
+					');
+		}
 		return true;
 	}
 
@@ -630,7 +669,6 @@ class PlgSystemTwbootstrap extends JPlugin
 
 		return $result;
 	}
-
 
 	/**
 	* Add a css file declaration

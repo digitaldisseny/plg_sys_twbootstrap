@@ -42,10 +42,10 @@
 					default="0"
 					label="PLG_SYS_TWBOOTSTRAP_FIELD_DEFAULT_MODE_LABEL"
 					description="PLG_SYS_TWBOOTSTRAP_FIELD_DEFAULT_MODE_DESC">
-						<option value="0">
+						<option value="1">
 							JENABLED
 						</option>
-						<option value="1">
+						<option value="0">
 							JDISABLED
 						</option>
 				</field>
@@ -64,16 +64,6 @@
 						<option value="2">
 							PLG_SYS_TWBOOTSTRAP_VALUE_LOAD_GOOGLE
 						</option>
-				</field>
-				<field
-					name="loadBootstrap"
-					type="radio"
-					class="btn-group"
-					default="1"
-					label="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_LABEL"
-					description="PLG_SYS_TWBOOTSTRAP_FIELD_LOAD_BOOTSTRAP_DESC">
-						<option value="1">JYES</option>
-						<option value="0">JNO</option>
 				</field>
 				<field name="bootstrapMode"
 					type="list"
