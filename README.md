@@ -1,9 +1,11 @@
 Twitter Bootstrap Plugin for Joomla!
 ===============
 
-Twitter bootstrap plugin for Joomla 2.5.x.  
+Twitter bootstrap plugin for Joomla! 2.5.x. & Joomla! 3.0.x.  
 
-This plugin tries to simplify the Twitter Bootstrap integration for Joomla 2.5.x. Load all the required files and also enables some tweaks to improve the component and extensions template development.
+This plugin tries to simplify the Twitter Bootstrap integration for Joomla! 2.5.x and Bootstrap management for Joomla! 3.0.x. It loads all the required files and enables some tweaks to improve the component and extensions template development.  
+
+It also allows you to enable/disable Bootstrap per menu itemid.  
 
 Our recommendation is to use this plugin to load Bootstrap and disable any other bootstrap load.  
 
@@ -11,8 +13,8 @@ Our recommendation is to use this plugin to load Bootstrap and disable any other
 
 Version 
 ---------------
-**Plugin version:** 1.1.0  
-**Bootstrap Version:** 2.1.1  
+**Plugin version:** 1.2.0  
+**Bootstrap Version:** 2.2.2  
 
 Install
 ---------------
@@ -120,6 +122,7 @@ This way you ensure that your content is going to be shown allways as expected a
 
 Release History
 ---------------
+1.2.0. -> Customize CSS & JS Boostrap files and control Bootstrap loading per itemid.  
 1.1.0. -> Plugin now uses Twitter Bootstrap 2.1.1  
 1.0.3. -> Added spanish language & fix code to be Joomla! standard compliant.  
 1.0.2. -> Add template overrides support.  
