@@ -143,6 +143,16 @@ class PlgSystemTwbootstrap extends JPlugin
 
 	private $_htmlPositionsAvailable = array();
 
+	// Used to validate url
+	private $_componentsEnabled = array('*');
+
+	private $_viewsEnabled 		= array('*');
+
+	// Configure applications where enable plugin
+	private $_frontendEnabled 	= true;
+
+	private $_backendEnabled 	= false;
+
 	/**
 	 * Constructor
 	 *
@@ -151,6 +161,10 @@ class PlgSystemTwbootstrap extends JPlugin
 	function __construct( $subject )
 	{
 		parent::__construct($subject);
+
+		// Required objects
+		$this->_app = JFactory::getApplication();
+		$this->_doc = JFactory::getDocument();
 
 		// Set the HTML available positions
 		$this->_htmlPositionsAvailable = array_keys($this->_htmlPositions);
@@ -175,6 +189,12 @@ class PlgSystemTwbootstrap extends JPlugin
 	 */
 	function onAfterInitialise()
 	{
+		// Validate view
+		if (!$this->_validateUrl())
+		{
+			return true;
+		}
+
 		// Plugin parameters
 		$comColumns    = $this->_params->get('comColumns', 12);
 		$bootstrapMode = $this->_params->get('bootstrapMode', 'fluid');
@@ -221,21 +241,16 @@ class PlgSystemTwbootstrap extends JPlugin
 	 */
 	function onBeforeRender()
 	{
-		/*
 		// Validate view
 		if (!$this->_validateUrl())
 		{
 			return true;
 		}
-		*/
+
 		// Required objects
 		$app        = JFactory::getApplication();
 		$doc        = JFactory::getDocument();
 
-		if (!$app->isSite())
-		{
-			return true;
-		}
 		$pageParams = $app->getParams();
 
 		// Disable Default Bootstrap
@@ -248,23 +263,13 @@ class PlgSystemTwbootstrap extends JPlugin
 			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
 		}
 
-		// Check if we have to disable Mootools for this item
+		// Check if we have to disable Bootstrap for this item
 		$bsEnabled = $pageParams->get('twbs_enabled', $this->_params->get('defaultMode', 0));
 		if ($bsEnabled)
 		{
 			// Function used to replace window.addEvent()
 			$doc->addScriptDeclaration("function do_nothing() { return; }");
 
-			// Disable mootools javascript
-			/*
-			unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools-core.js']);
-			unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools-more.js']);
-			unset($doc->_scripts[JURI::root(true) . '/media/system/js/core.js']);
-			unset($doc->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
-			unset($doc->_scripts[JURI::root(true) . '/media/system/js/modal.js']);
-			unset($doc->_scripts[JURI::root(true) . '/media/system/js/mootools.js']);
-			unset($doc->_scripts[JURI::root(true) . '/plugins/system/mtupgrade/mootools.js']);
-*/
 			// Disable css stylesheets
 			unset($doc->_styleSheets[JURI::root(true) . '/media/system/css/modal.css']);
 
@@ -292,6 +297,12 @@ class PlgSystemTwbootstrap extends JPlugin
 	 */
 	function onAfterRender()
 	{
+		// Validate view
+		if (!$this->_validateUrl())
+		{
+			return true;
+		}
+
 		// Required objects
 		$app = JFactory::getApplication();
 		$doc = JFactory::getDocument();
@@ -444,217 +455,6 @@ class PlgSystemTwbootstrap extends JPlugin
 		}
 
 		return true;
-	}
-
-	/**
-	 * Initialize required folder structure
-	 *
-	 * @return none
-	 *
-	 * @author Roberto Segura - Digital Disseny, S.L.
-	 * @version 28/06/2012
-	 *
-	 */
-	private function _initFolders()
-	{
-
-		// Active template
-		$currentTemplate = $this->getCurrentTplName();
-
-		// Paths
-		$this->_pathPlugin = JPATH_PLUGINS . '/' . self::TYPE . '/' . self::NAME;
-		$this->_pathTemplate = JPATH_THEMES . '/' . $currentTemplate;
-		$this->_pathOverrides = $this->_pathTemplate . '/html/plg_' . self::TYPE . '_' . self::NAME;
-
-		// URLs
-		$this->_urlPlugin       = JURI::root(true) . "/plugins/" . self::TYPE . "/" . self::NAME;
-		$this->_urlJs           = $this->_urlPlugin . "/js";
-		$this->_urlCss          = $this->_urlPlugin . "/css";
-		$this->_urlOverrides    = JURI::root(true) . '/templates/' . $currentTemplate
-								. '/html/plg_' . self::TYPE . '_' . self::NAME;
-		$this->_urlCssOverrides = $this->_urlOverrides . '/css';
-		$this->_urlJsOverrides  = $this->_urlOverrides . '/js';
-	}
-
-	/**
-	 * Load / inject CSS
-	 *
-	 * @return none
-	 *
-	 * @author Roberto Segura - Digital Disseny, S.L.
-	 * @version 27/06/2012
-	 *
-	 */
-	private function _loadCSS()
-	{
-		if (!empty($this->_cssCalls))
-		{
-			$body = JResponse::getBody();
-			foreach ($this->_cssCalls as $position => $cssCalls)
-			{
-				if (!empty($cssCalls))
-				{
-					// If position is defined we append code (inject) to the desired position
-					if (in_array($position, $this->_htmlPositionsAvailable))
-					{
-						// Generate the injected code
-						$cssIncludes = implode("\n\t", $cssCalls);
-						$pattern = $this->_htmlPositions[$position]['pattern'];
-						$replacement = str_replace('##CONT##', $cssIncludes, $this->_htmlPositions[$position]['replacement']);
-						$body = preg_replace($pattern, $replacement, $body);
-					}
-					else
-					{
-						$doc = JFactory::getDocument();
-						foreach ($cssCalls as $cssUrl)
-						{
-							$doc->addStyleSheet($cssUrl);
-						}
-					}
-				}
-			}
-			JResponse::setBody($body);
-			return $body;
-		}
-	}
-
-	/**
-	 * Load / inject Javascript
-	 *
-	 * @return none
-	 *
-	 * @author Roberto Segura - Digital Disseny, S.L.
-	 * @version 27/06/2012
-	 *
-	 */
-	private function _loadJS()
-	{
-		if (!empty($this->_jsCalls))
-		{
-			$body = JResponse::getBody();
-			foreach ($this->_jsCalls as $position => $jsCalls)
-			{
-				if (!empty($jsCalls))
-				{
-					// If position is defined we append code (inject) to the desired position
-					if (in_array($position, $this->_htmlPositionsAvailable))
-					{
-						// Generate the injected code
-						$jsIncludes  = implode("\n\t", $jsCalls);
-						$pattern     = $this->_htmlPositions[$position]['pattern'];
-						$replacement = str_replace('##CONT##', $jsIncludes, $this->_htmlPositions[$position]['replacement']);
-						$body        = preg_replace($pattern, $replacement, $body);
-					}
-					else
-					{
-						$doc = JFactory::getDocument();
-						foreach ($jsCalls as $jsUrl)
-						{
-							$doc->addScript($jsUrl);
-						}
-					}
-				}
-			}
-			JResponse::setBody($body);
-			return $body;
-		}
-	}
-
-	/**
-	* Add a css file declaration
-	*
-	* @param   string  $cssUrl    url of the CSS file
-	* @param   string  $position  position where we are going to load JS
-	*
-	* @return none
-	*
-	* @author Roberto Segura - Digital Disseny, S.L.
-	* @version 23/04/2012
-	*/
-	private function _addCssCall($cssUrl, $position = null)
-	{
-
-		// Check for CSS overrides
-		$overrideUrl = str_replace($this->_urlCss, $this->_urlCssOverrides, $cssUrl);
-		if ($this->checkUrl($overrideUrl, true))
-		{
-			$cssUrl = $overrideUrl;
-		}
-
-		// If position is not available we will try to load the url through $doc->addScript
-		if (is_null($position) || !in_array($position, $this->_htmlPositionsAvailable))
-		{
-			$position = 'addstylesheet';
-			$cssCall = $cssUrl;
-		}
-		else
-		{
-			$cssCall = '<link rel="stylesheet" type="text/css" href="' . $cssUrl . '" >';
-		}
-
-		// Initialize position
-		if (!isset($this->_cssCalls[$position]))
-		{
-			$this->_cssCalls[$position] = array();
-		}
-
-		// Insert CSS call
-		$this->_cssCalls[$position][] = $cssCall;
-
-	}
-
-	/**
-	 * Add a JS script declaration
-	 *
-	 * @param   string  $jsUrl     url of the JS file or script content for type != url
-	 * @param   string  $position  position where we are going to load JS
-	 * @param   string  $type      url || script
-	 *
-	 * @return  none
-	 *
-	 * @author Roberto Segura - Digital Disseny, S.L.
-	 * @version 27/06/2012
-	 *
-	 */
-	private function _addJsCall($jsUrl, $position = null, $type = 'url')
-	{
-
-		// Check for overrides
-		if ($type == 'url')
-		{
-			$overrideUrl = str_replace($this->_urlJs, $this->_urlJsOverrides, $jsUrl);
-			if ($this->checkUrl($overrideUrl, true))
-			{
-				$jsUrl = $overrideUrl;
-			}
-		}
-
-		// If position is not available we will try to load the url through $doc->addScript
-		if (is_null($position) || !in_array($position, $this->_htmlPositionsAvailable))
-		{
-			$position = 'addscript';
-			$jsCall = $jsUrl;
-		}
-		else
-		{
-			if ($type == 'url')
-			{
-				$jsCall = '<script src="' . $jsUrl . '" type="text/javascript"></script>';
-			}
-			else
-			{
-				$jsCall = '<script type="text/javascript">' . $jsUrl . '</script>';
-			}
-		}
-
-		// Initialize position
-		if (!isset($this->_jsCalls[$position]))
-		{
-			$this->_jsCalls[$position] = array();
-		}
-
-		// Insert JS call
-		$this->_jsCalls[$position][] = $jsCall;
 	}
 
 	/**
@@ -829,5 +629,310 @@ class PlgSystemTwbootstrap extends JPlugin
 		}
 
 		return $result;
+	}
+
+
+	/**
+	* Add a css file declaration
+	*
+	* @param   string  $cssUrl    url of the CSS file
+	* @param   string  $position  position where we are going to load JS
+	*
+	* @return none
+	*
+	* @author Roberto Segura - Digital Disseny, S.L.
+	* @version 23/04/2012
+	*/
+	private function _addCssCall($cssUrl, $position = null)
+	{
+
+		// Check for CSS overrides
+		$overrideUrl = str_replace($this->_urlCss, $this->_urlCssOverrides, $cssUrl);
+		if ($this->checkUrl($overrideUrl, true))
+		{
+			$cssUrl = $overrideUrl;
+		}
+
+		// If position is not available we will try to load the url through $doc->addScript
+		if (is_null($position) || !in_array($position, $this->_htmlPositionsAvailable))
+		{
+			$position = 'addstylesheet';
+			$cssCall = $cssUrl;
+		}
+		else
+		{
+			$cssCall = '<link rel="stylesheet" type="text/css" href="' . $cssUrl . '" >';
+		}
+
+		// Initialize position
+		if (!isset($this->_cssCalls[$position]))
+		{
+			$this->_cssCalls[$position] = array();
+		}
+
+		// Insert CSS call
+		$this->_cssCalls[$position][] = $cssCall;
+
+	}
+
+	/**
+	 * Add a JS script declaration
+	 *
+	 * @param   string  $jsUrl     url of the JS file or script content for type != url
+	 * @param   string  $position  position where we are going to load JS
+	 * @param   string  $type      url || script
+	 *
+	 * @return  none
+	 *
+	 * @author Roberto Segura - Digital Disseny, S.L.
+	 * @version 27/06/2012
+	 *
+	 */
+	private function _addJsCall($jsUrl, $position = null, $type = 'url')
+	{
+
+		// Check for overrides
+		if ($type == 'url')
+		{
+			$overrideUrl = str_replace($this->_urlJs, $this->_urlJsOverrides, $jsUrl);
+			if ($this->checkUrl($overrideUrl, true))
+			{
+				$jsUrl = $overrideUrl;
+			}
+		}
+
+		// If position is not available we will try to load the url through $doc->addScript
+		if (is_null($position) || !in_array($position, $this->_htmlPositionsAvailable))
+		{
+			$position = 'addscript';
+			$jsCall = $jsUrl;
+		}
+		else
+		{
+			if ($type == 'url')
+			{
+				$jsCall = '<script src="' . $jsUrl . '" type="text/javascript"></script>';
+			}
+			else
+			{
+				$jsCall = '<script type="text/javascript">' . $jsUrl . '</script>';
+			}
+		}
+
+		// Initialize position
+		if (!isset($this->_jsCalls[$position]))
+		{
+			$this->_jsCalls[$position] = array();
+		}
+
+		// Insert JS call
+		$this->_jsCalls[$position][] = $jsCall;
+	}
+
+	/**
+	 * Initialize required folder structure
+	 *
+	 * @return none
+	 *
+	 * @author Roberto Segura - Digital Disseny, S.L.
+	 * @version 28/06/2012
+	 *
+	 */
+	private function _initFolders()
+	{
+
+		// Active template
+		$currentTemplate = $this->getCurrentTplName();
+
+		// Paths
+		$this->_pathPlugin = JPATH_PLUGINS . '/' . self::TYPE . '/' . self::NAME;
+		$this->_pathTemplate = JPATH_THEMES . '/' . $currentTemplate;
+		$this->_pathOverrides = $this->_pathTemplate . '/html/plg_' . self::TYPE . '_' . self::NAME;
+
+		// URLs
+		$this->_urlPlugin       = JURI::root(true) . "/plugins/" . self::TYPE . "/" . self::NAME;
+		$this->_urlJs           = $this->_urlPlugin . "/js";
+		$this->_urlCss          = $this->_urlPlugin . "/css";
+		$this->_urlOverrides    = JURI::root(true) . '/templates/' . $currentTemplate
+								. '/html/plg_' . self::TYPE . '_' . self::NAME;
+		$this->_urlCssOverrides = $this->_urlOverrides . '/css';
+		$this->_urlJsOverrides  = $this->_urlOverrides . '/js';
+	}
+
+	/**
+	 * Load / inject CSS
+	 *
+	 * @return none
+	 *
+	 * @author Roberto Segura - Digital Disseny, S.L.
+	 * @version 27/06/2012
+	 *
+	 */
+	private function _loadCSS()
+	{
+		if (!empty($this->_cssCalls))
+		{
+			$body = JResponse::getBody();
+			foreach ($this->_cssCalls as $position => $cssCalls)
+			{
+				if (!empty($cssCalls))
+				{
+					// If position is defined we append code (inject) to the desired position
+					if (in_array($position, $this->_htmlPositionsAvailable))
+					{
+						// Generate the injected code
+						$cssIncludes = implode("\n\t", $cssCalls);
+						$pattern = $this->_htmlPositions[$position]['pattern'];
+						$replacement = str_replace('##CONT##', $cssIncludes, $this->_htmlPositions[$position]['replacement']);
+						$body = preg_replace($pattern, $replacement, $body);
+					}
+					else
+					{
+						$doc = JFactory::getDocument();
+						foreach ($cssCalls as $cssUrl)
+						{
+							$doc->addStyleSheet($cssUrl);
+						}
+					}
+				}
+			}
+			JResponse::setBody($body);
+			return $body;
+		}
+	}
+
+	/**
+	 * Load / inject Javascript
+	 *
+	 * @return none
+	 *
+	 * @author Roberto Segura - Digital Disseny, S.L.
+	 * @version 27/06/2012
+	 *
+	 */
+	private function _loadJS()
+	{
+		if (!empty($this->_jsCalls))
+		{
+			$body = JResponse::getBody();
+			foreach ($this->_jsCalls as $position => $jsCalls)
+			{
+				if (!empty($jsCalls))
+				{
+					// If position is defined we append code (inject) to the desired position
+					if (in_array($position, $this->_htmlPositionsAvailable))
+					{
+						// Generate the injected code
+						$jsIncludes  = implode("\n\t", $jsCalls);
+						$pattern     = $this->_htmlPositions[$position]['pattern'];
+						$replacement = str_replace('##CONT##', $jsIncludes, $this->_htmlPositions[$position]['replacement']);
+						$body        = preg_replace($pattern, $replacement, $body);
+					}
+					else
+					{
+						$doc = JFactory::getDocument();
+						foreach ($jsCalls as $jsUrl)
+						{
+							$doc->addScript($jsUrl);
+						}
+					}
+				}
+			}
+			JResponse::setBody($body);
+			return $body;
+		}
+	}
+
+	/**
+	 * validate if the plugin is enabled for current application (frontend / backend)
+	 *
+	 * @return boolean
+	 *
+	 * @author Roberto Segura
+	 * @version 14/08/2012
+	 *
+	 */
+	private function _validateApplication()
+	{
+		if ( ($this->_app->isSite() && $this->_frontendEnabled) || ($this->_app->isAdmin() && $this->_backendEnabled) )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Validate option in url
+	 *
+	 * @return boolean
+	 *
+	 * @author Roberto Segura
+	 * @version 14/08/2012
+	 *
+	 */
+	private function _validateComponent()
+	{
+		if ( in_array('*', $this->_componentsEnabled) || in_array($this->_option, $this->_componentsEnabled) )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * custom method for extra validations
+	 *
+	 * @return true
+	 *
+	 * @author Roberto Segura
+	 * @version 14/08/2012
+	 *
+	 */
+	private function _validateExtra()
+	{
+		return $this->_validateApplication();
+	}
+
+	/**
+	 * plugin enabled for this url?
+	 *
+	 * @return boolean
+	 *
+	 * @author Roberto Segura
+	 * @version 14/08/2012
+	 *
+	 */
+	private function _validateUrl()
+	{
+		if ( $this->_validateComponent() && $this->_validateView())
+		{
+			if (method_exists($this, '_validateExtra'))
+			{
+				return $this->_validateExtra();
+			}
+			else
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * validate view parameter in url
+	 *
+	 * @return boolean
+	 *
+	 * @author Roberto Segura
+	 * @version 14/08/2012
+	 *
+	 */
+	private function _validateView()
+	{
+		if ( in_array('*', $this->_viewsEnabled) || in_array($this->_view, $this->_viewsEnabled))
+		{
+			return true;
+		}
+		return false;
 	}
 }
