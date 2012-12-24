@@ -263,7 +263,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		}
 
 		// Check if we have to disable Bootstrap for this item
-		$bsEnabled = $pageParams->get('twbs_enabled', $this->_params->get('defaultMode', 0));
+		$bsEnabled = $pageParams->get('twbs_enabled', $this->_params->get('twbs_defmode', 0));
 		if ($bsEnabled)
 		{
 			// Disable 3rd party extensions added by the user
@@ -312,7 +312,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		$loadJquery     = $this->_params->get('loadJquery', 0);
 		$injectPosition = $this->_params->get('injectPosition', 'headtop');
 		$updated        = $this->_params->get('updated', '0000-00-00 00:00:00');
-		$loadBootstrap  = $pageParams->get('twbs_enabled', $this->_params->get('defaultMode', 0));
+		$loadBootstrap  = $pageParams->get('twbs_enabled', $this->_params->get('twbs_defmode', 0));
 
 		// Check modals
 		$disabledTmpls = array('component', 'raw');
