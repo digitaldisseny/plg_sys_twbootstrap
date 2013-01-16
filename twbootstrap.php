@@ -262,6 +262,15 @@ class PlgSystemTwbootstrap extends JPlugin
 			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
 		}
 
+		// Disable any bootstrap CSS call
+		foreach ($doc->_styleSheets as $style => $value)
+		{
+			if (substr_count($style, 'bootstrap.min.css') || substr_count($style, 'bootstrap-noconflict.css'))
+			{
+				unset($doc->_styleSheets[$style]);
+			}
+		}
+
 		// Check if we have to disable Bootstrap for this item
 		$bsEnabled = $pageParams->get('twbs_enabled', $this->_params->get('twbs_defmode', 0));
 		if ($bsEnabled)
