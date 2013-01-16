@@ -265,7 +265,8 @@ class PlgSystemTwbootstrap extends JPlugin
 		// Disable any bootstrap CSS call
 		foreach ($doc->_styleSheets as $style => $value)
 		{
-			if (substr_count($style, 'bootstrap.min.css') || substr_count($style, 'bootstrap-noconflict.css'))
+			if (substr_count($style, 'bootstrap.min.css') || substr_count($style, 'bootstrap-noconflict.css')
+				|| substr_count($style, 'bootstrap.css'))
 			{
 				unset($doc->_styleSheets[$style]);
 			}
