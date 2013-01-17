@@ -252,21 +252,35 @@ class PlgSystemTwbootstrap extends JPlugin
 		$doc        = JFactory::getDocument();
 		$pageParams = $app->getParams();
 
-		// Disable Default Bootstrap
+		// Disable any Bootstrap JS
 		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+		foreach ($doc->_scripts as $script => $value)
+		{
+			if (substr_count($script, 'bootstrap.min.js'))
+			{
+				unset($doc->_scripts[$script]);
+			}
+		}
 
 		// If we are going to load jQuery disable any default jQuery loaded
 		if ($this->_params->get('loadJquery', 0))
 		{
 			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
 			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
+
+			foreach ($doc->_scripts as $script => $value)
+			{
+				if (substr_count($script, 'jquery-1.7.2.min.js') || substr_count($script, 'jquery.min.js'))
+				{
+					unset($doc->_scripts[$script]);
+				}
+			}
 		}
 
-		// Disable any bootstrap CSS call
+		// Disable any bootstrap CSS
 		foreach ($doc->_styleSheets as $style => $value)
 		{
-			if (substr_count($style, 'bootstrap.min.css') || substr_count($style, 'bootstrap-noconflict.css')
-				|| substr_count($style, 'bootstrap.css'))
+			if (substr_count($style, 'bootstrap.min.css') || substr_count($style, 'bootstrap-noconflict.css'))
 			{
 				unset($doc->_styleSheets[$style]);
 			}
