@@ -270,7 +270,7 @@ class PlgSystemTwbootstrap extends JPlugin
 
 			foreach ($doc->_scripts as $script => $value)
 			{
-				if (substr_count($script, 'jquery-1.7.2.min.js') || substr_count($script, 'jquery.min.js'))
+				if ($script == 'jquery-1.7.2.min.js' || $script == 'jquery.min.js')
 				{
 					unset($doc->_scripts[$script]);
 				}
