@@ -12,8 +12,6 @@
 defined('_JEXEC') or die( 'Restricted access' );
 
 JLoader::import('joomla.plugin.plugin');
-JLoader::import('joomla.filesystem.file');
-JLoader::import('joomla.filesystem.folder');
 
 /**
  * Main plugin class
@@ -530,7 +528,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		{
 			return true;
 		}
-		elseif (JFolder::exists($path))
+		elseif (is_dir($path))
 		{
 			return true;
 		}
@@ -562,11 +560,11 @@ class PlgSystemTwbootstrap extends JPlugin
 			$subpath = str_replace('/', DIRECTORY_SEPARATOR, $subpath);
 			$calculatedPath = JPATH_ROOT . DIRECTORY_SEPARATOR . $subpath;
 
-			if ($file && JFile::exists($calculatedPath))
+			if ($file && file_exists($calculatedPath))
 			{
 				return true;
 			}
-			elseif (JFolder::exists($calculatedPath))
+			elseif (is_dir($calculatedPath))
 			{
 				return true;
 			}
