@@ -13,7 +13,7 @@ Our recommendation is to use this plugin to load Bootstrap and disable any other
 
 Version 
 ---------------
-**Plugin version:** 1.2.0  
+**Plugin version:** 1.3.0  
 **Bootstrap Version:** 2.2.2  
 
 Install
@@ -122,16 +122,10 @@ This way you ensure that your content is going to be shown allways as expected a
 
 Release History
 ---------------
+1.3.0. -> Update to bootstrap 2.3.2 & jQuery 1.11.0  
 1.2.0. -> Customize CSS & JS Boostrap files and control Bootstrap loading per itemid.  
 1.1.0. -> Plugin now uses Twitter Bootstrap 2.1.1  
 1.0.3. -> Added spanish language & fix code to be Joomla! standard compliant.  
 1.0.2. -> Add template overrides support.  
 1.0.1. -> Bug fixes and selectable CSS/JS inject position  
 1.0.0. -> First stable version  
-
-What's next?
----------------
-We are going to use this plugin as the bootstrap base of all our developments. We plan to keep this plugin updated with the latest Twitter Bootstrap versions. We also want to improve it and add some tweaks as:  
-* Allow the user to set the component columns width per menu item. 
-* Create a backend CSS override to ensure that Joomla 2.5.x works with bootstrap.
-* Solve future Mootools / Bootstrap conflicts     
