@@ -506,27 +506,8 @@ class PlgSystemTwbootstrap extends JPlugin
 		// Extra parameters for menu edit
 		if ($form->getName() == 'com_menus.item')
 		{
-			$form->load('
-					<form>
-					<fields name="params" >
-					<fieldset
-					name="Bootstrap enable/disable"
-					label="PLG_SYS_TWBOOTSTRAP_OPTIONS"
-					>
-					<field
-					name="twbs_enabled"
-					type="radio"
-					label="PLG_SYS_TWBOOTSTRAP_FIELD_ENABLE_BOOTSTRAP_LABEL"
-					description="PLG_SYS_TWBOOTSTRAP_FIELD_ENABLE_BOOTSTRAP_DESC"
-					default="' . $this->_params->get('twbs_defmode', 0) . '"
-					>
-							<option value="1">JYES</option>
-							<option value="0">JNO</option>
-					</field>
-					</fieldset>
-					</fields>
-					</form>
-					');
+			$form->loadFile($this->_pathPlugin . '/form/menuitem.xml');
+			$form->setFieldAttribute('twbs_enabled', 'default', $this->_params->get('twbs_defmode', 0), 'params');
 		}
 
 		return true;

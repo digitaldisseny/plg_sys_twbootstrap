@@ -11,7 +11,7 @@
 	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
 	<files>
 		<folder>css</folder>
-		<folder>fields</folder>
+		<folder>form</folder>
 		<folder>img</folder>
 		<folder>js</folder>
 		<folder>less</folder>
@@ -32,7 +32,7 @@
 		<language tag="es-ES">language/es-ES/es-ES.plg_system_twbootstrap.sys.ini</language>
 	</languages>
 	<config>
-		<fields name="params" addfieldpath="plugins/system/twbootstrap/fields">
+		<fields name="params" addfieldpath="plugins/system/twbootstrap/form/field">
 				<fieldset name="basic">
 					<field type="assetloader" name="assetloader" label="PLG_SYS_TWBOOTSTRAP_FIELD_ASSET_LOADER" />
 					<field
