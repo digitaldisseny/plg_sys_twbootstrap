@@ -4,7 +4,7 @@
  * @subpackage  System.Twbootstrap
  *
  * @author      Roberto Segura <roberto@phproberto.com>
- * @copyright   (c) 2012 Roberto Segura. All Rights Reserved.
+ * @copyright   (c) 2012 - 2014 Digital Disseny, S.L. & Roberto Segura. All Rights Reserved.
  * @license     GNU/GPL 2, http://www.gnu.org/licenses/gpl-2.0.htm
  * @link        http://digitaldisseny.com/en/extensions/twitter-bootstrap-plugin-joomla
  */
@@ -18,10 +18,9 @@ JLoader::import('joomla.filesystem.folder');
 /**
  * Main plugin class
  *
- * @version     31/08/2012
  * @package     Joomla.Plugin
  * @subpackage  System.Twbootstrap
- * @since       2.5
+ * @since       1.0
  *
  */
 class PlgSystemTwbootstrap extends JPlugin
@@ -268,6 +267,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		if ($this->_params->get('loadJquery', 0))
 		{
 			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']);
+			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-migrate.min.js']);
 			unset($doc->_scripts[JURI::root(true) . '/media/jui/js/jquery-noconflict.js']);
 
 			foreach ($doc->_scripts as $script => $value)
@@ -368,17 +368,18 @@ class PlgSystemTwbootstrap extends JPlugin
 				{
 					// Load jQuery locally
 					case 1:
-						$jquery = $this->_urlJs . '/jquery.min.js';
+						$this->_addJsCall($this->_urlJs . '/jquery/jquery.min.js', $injectPosition);
+						$this->_addJsCall($this->_urlJs . '/jquery/jquery-migrate.min.js', $injectPosition);
 						break;
 
 					// Load jQuery from Google
 					default:
-						$jquery = '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js';
+						$this->_addJsCall('//code.jquery.com/jquery-1.11.0.min.js', $injectPosition);
+						$this->_addJsCall('//code.jquery.com/jquery-migrate-1.2.1.min.js', $injectPosition);
 					break;
 				}
 
-				// Add script to header
-				$this->_addJsCall($jquery, $injectPosition);
+				// Ensure jQuery is loaded in noConflict mode
 				$this->_addJsCall('jQuery.noConflict();', $injectPosition, 'script');
 			}
 

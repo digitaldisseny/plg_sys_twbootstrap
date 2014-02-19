@@ -1,20 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
 	<name>PLG_SYS_TWBOOTSTRAP</name>
-	<author>Digital Disseny, S.L.</author>
-	<creationDate>December 2012</creationDate>
-	<copyright>Copyright (C) 2012 Digital Disseny, S.L. All rights reserved.</copyright>
+	<author>@digitaldisseny &amp; @phproberto</author>
+	<creationDate>February 2014</creationDate>
+	<copyright>Copyright (C) 2012 - 2014 Digital Disseny, S.L. &amp; Roberto Segura. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>roberto@digitaldisseny.com</authorEmail>
-	<authorUrl>www.digitaldisseny.com.com</authorUrl>
-	<version>1.2.0</version>
+	<authorUrl>www.digitaldisseny.com</authorUrl>
+	<version>1.2.2</version>
 	<description>PLG_SYS_TWBOOTSTRAP_XML_DESC</description>
 	<files>
 		<folder>css</folder>
 		<folder>fields</folder>
 		<folder>img</folder>
 		<folder>js</folder>
-		<folder>language</folder>
 		<folder>less</folder>
 		<folder>lib</folder>
 		<filename plugin="twbootstrap">twbootstrap.php</filename>
@@ -36,16 +35,6 @@
 		<fields name="params" addfieldpath="plugins/system/twbootstrap/fields">
 				<fieldset name="basic">
 					<field type="assetloader" name="assetloader" label="PLG_SYS_TWBOOTSTRAP_FIELD_ASSET_LOADER" />
-					<field
-						name="bsVersion"
-						type="list"
-						default="2"
-						label="PLG_SYS_TWBOOTSTRAP_FIELD_BOOTSTRAP_VERSION_LABEL"
-						description="PLG_SYS_TWBOOTSTRAP_FIELD_BOOTSTRAP_VERSION_DESC"
-						>
-							<option value="2">JENABLED</option>
-							<option value="3">JDISABLED</option>
-					</field>
 					<field
 						name="twbs_defmode"
 						type="list"
