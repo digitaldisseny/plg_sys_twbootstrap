@@ -178,7 +178,6 @@ class PlgSystemTwbootstrap extends JPlugin
 
 		// Load plugin language
 		$this->loadLanguage('plg_' . self::TYPE . '_' . self::NAME, JPATH_ADMINISTRATOR);
-
 	}
 
 	/**
@@ -217,19 +216,21 @@ class PlgSystemTwbootstrap extends JPlugin
 		{
 			define('BOOTSTRAP_VERSION', '2.0.4');
 		}
+
 		if (!defined('BOOTSTRAP_COM_COLUMNS'))
 		{
 			define('BOOTSTRAP_COM_COLUMNS', $comColumns);
 		}
+
 		if (!defined('BOOTSTRAP_CONTAINER_CLASS'))
 		{
 			define('BOOTSTRAP_CONTAINER_CLASS', $bootstrapContainerClass);
 		}
+
 		if (!defined('BOOTSTRAP_ROW_CLASS'))
 		{
 			define('BOOTSTRAP_ROW_CLASS', $bootstrapRowClass);
 		}
-
 	}
 
 	/**
@@ -254,6 +255,7 @@ class PlgSystemTwbootstrap extends JPlugin
 
 		// Disable any Bootstrap JS
 		unset($doc->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
+
 		foreach ($doc->_scripts as $script => $value)
 		{
 			if (substr_count($script, 'bootstrap.min.js'))
@@ -288,12 +290,14 @@ class PlgSystemTwbootstrap extends JPlugin
 
 		// Check if we have to disable Bootstrap for this item
 		$bsEnabled = $pageParams->get('twbs_enabled', $this->_params->get('twbs_defmode', 0));
+
 		if ($bsEnabled)
 		{
 			// Disable 3rd party extensions added by the user
 			if ($manualDisable = $this->_params->get('manualDisable', null))
 			{
 				$scripts = explode(',', $manualDisable);
+
 				foreach ($scripts as $script)
 				{
 					// Try to disable relative and full URLs
@@ -302,6 +306,7 @@ class PlgSystemTwbootstrap extends JPlugin
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -340,6 +345,7 @@ class PlgSystemTwbootstrap extends JPlugin
 
 		// Check modals
 		$disabledTmpls = array('component', 'raw');
+
 		if ($disableModal && in_array($tmpl, $disabledTmpls))
 		{
 			return true;
@@ -355,7 +361,6 @@ class PlgSystemTwbootstrap extends JPlugin
 		if ( ($app->isSite() && ($loadFrontBack == 'frontend' || $loadFrontBack == 'both'))
 			|| ($app->isAdmin() && ($loadFrontBack == 'backend' || $loadFrontBack == 'both')) )
 		{
-
 			// Load jQuery ? jQuery is added to header to avoid non-ready errors
 			if ($loadJquery)
 			{
@@ -401,6 +406,7 @@ class PlgSystemTwbootstrap extends JPlugin
 					$lessc->setFormatter("compressed");
 					$sourceCss = '';
 					$outputCss = '';
+
 					foreach ($activeCssFiles as $file)
 					{
 						$lessc->addLessFile($sourceDir . '/' . $file);
@@ -417,7 +423,9 @@ class PlgSystemTwbootstrap extends JPlugin
 						echo 'LESS compile error: ' . implode('<br />', $lessc->errors);
 					}
 				}
+
 				$this->_addCssCall($bootstrapCss, $injectPosition);
+
 				if (!is_null($bootstrapResponsiveCss))
 				{
 					$this->_addCssCall($bootstrapResponsiveCss, $injectPosition);
@@ -428,10 +436,12 @@ class PlgSystemTwbootstrap extends JPlugin
 				{
 					require_once __DIR__ . '/lib/php-closure/my-php-closure.php';
 					$jsCompiler = new MyPhpClosure;
+
 					foreach ($activeJsFiles as $file)
 					{
 						$jsCompiler->add(__DIR__ . '/js/bootstrap/' . $file);
 					}
+
 					$jsCompiler->simpleMode();
 
 					// Advanced mode fails to compile bootstrap | $c->advancedMode()
@@ -457,7 +467,6 @@ class PlgSystemTwbootstrap extends JPlugin
 				// Bootstrap JS - loaded before body ending
 				$this->_addJsCall($bootstrapJs, 'bodybottom');
 			}
-
 		}
 
 		// CSS load
@@ -476,19 +485,20 @@ class PlgSystemTwbootstrap extends JPlugin
 	}
 
 	/**
-	* Change forms before they are shown to the user
-	*
-	* @param   JForm  $form  JForm object
-	* @param   array  $data  Data array
-	*
-	* @return boolean
-	*/
+	 * Change forms before they are shown to the user
+	 *
+	 * @param   JForm  $form  JForm object
+	 * @param   array  $data  Data array
+	 *
+	 * @return  boolean
+	 */
 	public function onContentPrepareForm($form, $data)
 	{
 		// Check we have a form
 		if (!($form instanceof JForm))
 		{
 			$this->_subject->setError('JERROR_NOT_A_FORM');
+
 			return false;
 		}
 
@@ -517,6 +527,7 @@ class PlgSystemTwbootstrap extends JPlugin
 					</form>
 					');
 		}
+
 		return true;
 	}
 
@@ -533,7 +544,7 @@ class PlgSystemTwbootstrap extends JPlugin
 	 */
 	public function checkPath($path, $file = false)
 	{
-		if ($file && JFile::exists($path))
+		if ($file && file_exists($path))
 		{
 			return true;
 		}
@@ -541,6 +552,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		{
 			return true;
 		}
+
 		return false;
 	}
 
@@ -558,6 +570,7 @@ class PlgSystemTwbootstrap extends JPlugin
 	public function checkUrl($url, $file = false)
 	{
 		$subpath = str_replace(JURI::root(true), '', $url);
+
 		if (empty($subpath))
 		{
 			return true;
@@ -566,6 +579,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		{
 			$subpath = str_replace('/', DIRECTORY_SEPARATOR, $subpath);
 			$calculatedPath = JPATH_ROOT . DIRECTORY_SEPARATOR . $subpath;
+
 			if ($file && JFile::exists($calculatedPath))
 			{
 				return true;
@@ -575,6 +589,7 @@ class PlgSystemTwbootstrap extends JPlugin
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -586,6 +601,7 @@ class PlgSystemTwbootstrap extends JPlugin
 	function getBootstrapActiveJsFiles()
 	{
 		$files = array();
+
 		if (!empty($this->_bootstrapJsFiles))
 		{
 			foreach ($this->_bootstrapJsFiles as $paramName => $jsFile)
@@ -596,6 +612,7 @@ class PlgSystemTwbootstrap extends JPlugin
 				}
 			}
 		}
+
 		return $files;
 	}
 
@@ -607,6 +624,7 @@ class PlgSystemTwbootstrap extends JPlugin
 	function getBootstrapActiveCssFiles()
 	{
 		$files = array();
+
 		if (!empty($this->_bootstrapCssFiles))
 		{
 			foreach ($this->_bootstrapCssFiles as $paramName => $cssFile)
@@ -617,6 +635,7 @@ class PlgSystemTwbootstrap extends JPlugin
 				}
 			}
 		}
+
 		return $files;
 	}
 
@@ -630,7 +649,6 @@ class PlgSystemTwbootstrap extends JPlugin
 	 */
 	public function getCurrentTplName()
 	{
-
 		// Required objects
 		$app    = JFactory::getApplication();
 		$jinput = $app->input;
@@ -682,6 +700,7 @@ class PlgSystemTwbootstrap extends JPlugin
 				" WHERE client_id=" . (int) $client_id . " " .
 				" AND home = 1 ";
 		$db->setQuery($query);
+
 		try
 		{
 			$result = $db->loadResult();
@@ -695,21 +714,21 @@ class PlgSystemTwbootstrap extends JPlugin
 	}
 
 	/**
-	* Add a css file declaration
-	*
-	* @param   string  $cssUrl    url of the CSS file
-	* @param   string  $position  position where we are going to load JS
-	*
-	* @return none
-	*
-	* @author Roberto Segura - Digital Disseny, S.L.
-	* @version 23/04/2012
-	*/
+	 * Add a css file declaration
+	 *
+	 * @param   string  $cssUrl    url of the CSS file
+	 * @param   string  $position  position where we are going to load JS
+	 *
+	 * @return  none
+	 *
+	 * @author  Roberto Segura - Digital Disseny, S.L.
+	 * @version 23/04/2012
+	 */
 	private function _addCssCall($cssUrl, $position = null)
 	{
-
 		// Check for CSS overrides
 		$overrideUrl = str_replace($this->_urlCss, $this->_urlCssOverrides, $cssUrl);
+
 		if ($this->checkUrl($overrideUrl, true))
 		{
 			$cssUrl = $overrideUrl;
@@ -734,7 +753,6 @@ class PlgSystemTwbootstrap extends JPlugin
 
 		// Insert CSS call
 		$this->_cssCalls[$position][] = $cssCall;
-
 	}
 
 	/**
@@ -752,11 +770,11 @@ class PlgSystemTwbootstrap extends JPlugin
 	 */
 	private function _addJsCall($jsUrl, $position = null, $type = 'url')
 	{
-
 		// Check for overrides
 		if ($type == 'url')
 		{
 			$overrideUrl = str_replace($this->_urlJs, $this->_urlJsOverrides, $jsUrl);
+
 			if ($this->checkUrl($overrideUrl, true))
 			{
 				$jsUrl = $overrideUrl;
@@ -802,7 +820,6 @@ class PlgSystemTwbootstrap extends JPlugin
 	 */
 	private function _initFolders()
 	{
-
 		// Active template
 		$currentTemplate = $this->getCurrentTplName();
 
@@ -835,6 +852,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		if (!empty($this->_cssCalls))
 		{
 			$body = JResponse::getBody();
+
 			foreach ($this->_cssCalls as $position => $cssCalls)
 			{
 				if (!empty($cssCalls))
@@ -851,6 +869,7 @@ class PlgSystemTwbootstrap extends JPlugin
 					else
 					{
 						$doc = JFactory::getDocument();
+
 						foreach ($cssCalls as $cssUrl)
 						{
 							$doc->addStyleSheet($cssUrl);
@@ -858,7 +877,9 @@ class PlgSystemTwbootstrap extends JPlugin
 					}
 				}
 			}
+
 			JResponse::setBody($body);
+
 			return $body;
 		}
 	}
@@ -877,6 +898,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		if (!empty($this->_jsCalls))
 		{
 			$body = JResponse::getBody();
+
 			foreach ($this->_jsCalls as $position => $jsCalls)
 			{
 				if (!empty($jsCalls))
@@ -893,6 +915,7 @@ class PlgSystemTwbootstrap extends JPlugin
 					else
 					{
 						$doc = JFactory::getDocument();
+
 						foreach ($jsCalls as $jsUrl)
 						{
 							$doc->addScript($jsUrl);
@@ -900,7 +923,9 @@ class PlgSystemTwbootstrap extends JPlugin
 					}
 				}
 			}
+
 			JResponse::setBody($body);
+
 			return $body;
 		}
 	}
@@ -920,6 +945,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		{
 			return true;
 		}
+
 		return false;
 	}
 
@@ -938,6 +964,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		{
 			return true;
 		}
+
 		return false;
 	}
 
@@ -977,6 +1004,7 @@ class PlgSystemTwbootstrap extends JPlugin
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -995,6 +1023,7 @@ class PlgSystemTwbootstrap extends JPlugin
 		{
 			return true;
 		}
+
 		return false;
 	}
 }
